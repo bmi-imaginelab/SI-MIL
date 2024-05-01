@@ -34,14 +34,8 @@ json_path = args.json_path
 save_path = args.save_path
 
 
-
-if not os.path.isdir(save_path[:-14]):
-	os.mkdir(save_path[:-14])
-
 if not os.path.isdir(save_path):
 	os.mkdir(save_path)
-
-	
 
 
 final_list = []
