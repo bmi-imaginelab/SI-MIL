@@ -73,9 +73,10 @@ python club_features.py --feat_path 'test_dataset/Handcrafted_features' --column
 
 Note: Adjust the `--remove_cell_type` option if necessary, based on the classes of cells that are not present in your dataset of WSIs. For eg. we removed 'no-neoplastic' cell category in TCGA-Lung since that class of cell doesn't exists in PanNuke dataset for lung organ.
 
-#### Filtering patches
+#### Filtering patches and feature normalization
 
 TODO
+
 
 ### Deep Feature Extraction Pipeline
 
