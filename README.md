@@ -1,10 +1,3 @@
-# SI-MIL
-
-Dataset is temporarily made available at: https://stonybrookmedicine.box.com/s/eq5einovxcyfv1p0unezpumkrl1j6ftu. Eventually would be made available at TCIA portal. 
-
-Nuclei maps: https://stonybrookmedicine.box.com/s/89me9gynlzel0m6ud0bji5vpkqvxh9ed
-
-PathExpert features: https://stonybrookmedicine.box.com/s/ewylzthdisg5j5fvqsi2etpedqvc409v
 
 
 # SI-MIL: Taming Deep MIL for Self-Interpretability in Gigapixel Histopathology
@@ -24,6 +17,15 @@ conda activate simil
 ## Organizing Data
 
 In detail description for curating data for SI-MIL is provided in the directory [data_curation](https://github.com/bmi-imaginelab/SI-MIL/tree/main/data_curation). 
+
+## Open-source Data contribution
+
+Dataset is temporarily made available at: https://stonybrookmedicine.box.com/s/eq5einovxcyfv1p0unezpumkrl1j6ftu. Eventually would be made available at TCIA portal. 
+
+Nuclei maps: https://stonybrookmedicine.box.com/s/89me9gynlzel0m6ud0bji5vpkqvxh9ed
+
+PathExpert features: https://stonybrookmedicine.box.com/s/ewylzthdisg5j5fvqsi2etpedqvc409v
+
 
 ## Training
 
