@@ -84,6 +84,18 @@ TODO
 
 Extract features from the patches using provided self-supervised (DINO based) ViT-S for each of the corresponding datasets used in this study. 
 
+
+We provide the following pretrained VIT-S models with DINO SSL:
+
+
+|  Dataset | # Training  images | Download link |
+|:--------:|:------------------:|:-------------:|
+| TCGA-Lung 5x |       0 Mil       |   [link](https://drive.google.com/drive/folders/1kZ69wVEHV3k3Zr1hgS3kftz9cfNb9BxA?usp=sharing)            |
+| TCGA-BRCA 5x |        0 Mil      |   [link](https://drive.google.com/drive/folders/1r1Kgcgy34rP3O-X4AqhQ09Sf1OZdHvm2?usp=sharing)            |
+| TCGA-CRC 5x |        0 Mil      |   [link](https://drive.google.com/drive/folders/1r1Kgcgy34rP3O-X4AqhQ09Sf1OZdHvm2?usp=sharing)            |
+
+
+
 TODO
 
 
