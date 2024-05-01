@@ -18,7 +18,7 @@ To install python dependencies,
 
 ```
 conda env create -f environment.yaml
-conda activate ldm
+conda activate simil
 ```
 
 ## Downloading + Organizing Data
@@ -79,7 +79,9 @@ Refer to these notebooks for generating images using the provided models:
 * **Large Images:** [./notebooks/large_image_generation.ipynb](./notebooks/large_image_generation.ipynb) 
 
 
-This codebase builds heavily on []() and []().
+This codebase builds heavily on []() and [](). for MIL code and data preparation zoommil, dsmil, hovernet, 
+
+for feature extraction, heavily adopted from athena, social network analysis, and flock. 
 
 
 ## Bibtex
