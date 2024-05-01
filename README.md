@@ -54,12 +54,17 @@ Refer to these notebooks for generating WSI-level patch-feature importance repor
 * **Analysis:** [./.ipynb](./.ipynb) 
 
 
-This codebase builds heavily on []() and [](). for MIL code and data preparation zoommil, dsmil, hovernet, 
-
-for feature extraction, heavily adopted from athena, social network analysis, and flock. 
 
 
-## Bibtex
+## Acknowledgements
+
+SI-MIL codebase builds heavily on [ZoomMIL](https://github.com/histocartography/zoommil), [DSMIL](https://github.com/binli123/dsmil-wsi), and [CLAM](https://github.com/mahmoodlab/CLAM). We thank the authors for their contribution.
+
+Reported research was supported by NIH 1R21CA258493-01A1, NSF IIS-2123920, IIS-2212046, and the Stony Brook Profund 2022 grant. 
+
+## Reference
+
+If you find our work useful in your research or if you use parts of this code please consider citing our [paper](https://arxiv.org/pdf/2312.15010):
 
 ```
 @article{kapse2023si,
