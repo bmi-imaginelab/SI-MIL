@@ -15,7 +15,7 @@ Follow instructions in [HoVer-Net](https://github.com/vqdang/hover_net.git) repo
 
 Note that HoVer-Net framework can be replaced with other cell segmentation and classification models as required, however since the following feature extraction scripts are based on HoVer-Net based output, that's why those scripts would need to be modifed as well. 
 
-### Feature Extraction Pipeline
+### Path Expert Feature Extraction Pipeline
 
 #### Extracting Cell Properties
 
@@ -71,7 +71,16 @@ Combine all extracted features into a final dataset:
 python club_features.py --feat_path 'test_dataset/Handcrafted_features' --column_name_path 'test_dataset' --list_dict_path 'test_dataset/patches' --remove_cell_type 'none'
 ```
 
-Note: Adjust the `--remove_cell_type` option if necessary, based on the classes of cells that are not present in your WSIs.
+Note: Adjust the `--remove_cell_type` option if necessary, based on the classes of cells that are not present in your dataset of WSIs. For eg. we removed 'no-neoplastic' cell category in TCGA-Lung since that class of cell doesn't exists in PanNuke dataset for lung organ.
+
+### Deep Feature Extraction Pipeline
+
+#### Feature Extraction
+
+Extract features from the patches using provided self-supervised (DINO based) ViT-S for each of the corresponding datasets used in this study. 
+
+TODO
+
 
 ## Important Notes
 
