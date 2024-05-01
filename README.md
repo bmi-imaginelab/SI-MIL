@@ -20,11 +20,13 @@ In detail description for curating data for SI-MIL is provided in the directory 
 
 ## Open-source Data contribution
 
-Dataset is temporarily made available at: https://stonybrookmedicine.box.com/s/eq5einovxcyfv1p0unezpumkrl1j6ftu. Eventually would be made available at TCIA portal. 
+Given the extensive computation (both GPU and CPU) required for extracting cell maps from HoVer-Net and following Path Expert feature extraction, here we provide the following:
 
-Nuclei maps: https://stonybrookmedicine.box.com/s/89me9gynlzel0m6ud0bji5vpkqvxh9ed
+Nuclei maps for TCGA-BRCA, TCGA-LUAD, TCGA-LUSC, TCGA-COAD, TCGA-READ: https://stonybrookmedicine.box.com/s/89me9gynlzel0m6ud0bji5vpkqvxh9ed
 
-PathExpert features: https://stonybrookmedicine.box.com/s/ewylzthdisg5j5fvqsi2etpedqvc409v
+PathExpert features and Deep features (DINO SSL): https://stonybrookmedicine.box.com/s/ewylzthdisg5j5fvqsi2etpedqvc409v
+
+Note that this curated dataset is temporarily made available at Box, and eventually we plan to make it available at TCIA portal. 
 
 
 ## Training
