@@ -11,14 +11,9 @@ This repository contains scripts for extracting Path Expert and Deep features fr
 
 ### Extracting WSI-Level Cell Segmentation
 
-Use the HoVer-Net model for cell segmentation and classification:
+Follow instructions in [HoVer-Net](https://github.com/vqdang/hover_net.git) repository to extract cell segmentation and classification output for each WSI. Save the output in `test_dataset/Hovernet_output` with subfolders `json`, `mask`, and `thumb` for different types of data.
 
-```bash
-# Example command (modify paths as needed)
-python hovernet_infer.py --type_info_path path/to/pannuke_type_info.json --model_path path/to/pannuke_checkpoint --input_dir test_dataset/slides --output_dir test_dataset/Hovernet_output
-```
-
-Outputs will be saved in `test_dataset/Hovernet_output` with subfolders `json`, `mask`, and `thumb` for different types of data.
+To be consistent with our study, please use [PanNuke checkpoint](https://drive.google.com/file/d/1SbSArI3KOOWHxRlxnjchO7_MbWzB4lNR/view) for HoVer-Net model. Both HoVer-Net framework or particular checkpoint can be replaced as required, however since the following feature extraction scripts are based on HoVer-Net based output, that's why they would need to be modifed as well for other cell segmentation and classification models. 
 
 ### Feature Extraction Pipeline
 
