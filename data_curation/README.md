@@ -1,12 +1,8 @@
 # WSIs Feature Extraction Pipeline
 
-This repository contains scripts for extracting features from Whole Slide Images (WSIs) using the HoVer-Net model with the PanNuke checkpoint and several custom Python scripts for further data processing and feature extraction.
+This repository contains scripts for extracting Path Expert and Deep features from Whole Slide Images (WSIs) using the HoVer-Net model with the PanNuke checkpoint and several custom Python scripts for patch extraction and using provided SSL model for deep feature extraction.
 
 ## Getting Started
-
-### Prerequisites
-
-Ensure you have Python installed along with the necessary libraries such as OpenSlide and other dependencies mentioned in `requirements.txt`.
 
 ### Setting Up Your Dataset
 
