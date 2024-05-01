@@ -107,6 +107,8 @@ TODO
 
 ## Links and References
 
-- HoVer-Net Model and PanNuke checkpoint: [HoVer-Net GitHub](https://github.com/vqdang/hover_net), [PanNuke Checkpoint](https://drive.google.com/file/d/1SbSArI3KOOWHxRlxnjchO7_MbWzB4lNR/view)
+- HoVer-Net Model and PanNuke checkpoint: [HoVer-Net GitHub](https://github.com/vqdang/hover_net), [PanNuke Checkpoint](https://drive.google.com/file/d/1SbSArI3KOOWHxRlxnjchO7_MbWzB4lNR/view).
+- Athena feature extraction code is adopted from [ATHENA](https://github.com/AI4SCR/ATHENA), Social Network features from [Cells are Actors](https://arxiv.org/abs/2106.15299), and Cell feature extraction from [FLocK](https://github.com/hacylu/FLocK).
+- For self-supervision on pathology datasets, codebase is adopted from [DINO](https://github.com/facebookresearch/dino).
 
 Feel free to raise issues or contribute to this project if you have any improvements or encounter any problems.
