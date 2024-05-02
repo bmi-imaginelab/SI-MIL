@@ -18,8 +18,6 @@ from tqdm import tqdm
 import pickle
 import json
 torch.manual_seed(0)
-save_type = 'test'
-save = False
 import torch.nn.functional as F
 from sklearn.model_selection import KFold
 
@@ -150,17 +148,6 @@ def test(test_list, dataset_split_dict, dataset_split_deep_dict, features_array,
 	test_labels = np.array(test_labels)
 	test_predictions = np.array(test_predictions)
 	
-	if save is True:
-		with open(args.model_weights_path[:-14] + save_type + '_predictions.pickle', 'wb') as f:
-			pickle.dump(test_predictions, f)
-
-		with open(args.model_weights_path[:-14] + save_type + '_labels.pickle', 'wb') as f:
-			pickle.dump(test_labels, f)
-	
-		with open(args.model_weights_path[:-14] + save_type + '_bag_features.pickle', 'wb') as f:
-			print('saving')
-			pickle.dump(test_bag_features, f)
-	
 	auc_value = roc_auc_score(test_labels, test_predictions)
 	
 	test_predictions = (test_predictions>0.5)*1
@@ -178,10 +165,6 @@ def test(test_list, dataset_split_dict, dataset_split_deep_dict, features_array,
 		
 	avg_score = bag_score / len(test_list)
 	bag_score_classwise = bag_score_classwise/bag_number_classwise
-	
-	if save is True:
-		with open(args.model_weights_path[:-14] + save_type + '_class_prediction_bag.pickle', 'wb') as f:
-			pickle.dump(test_predictions, f)
 	
 	return total_loss / len(test_list), avg_score, auc_value, bag_score_classwise
 
@@ -228,13 +211,6 @@ def val(test_list, dataset_split_dict, dataset_split_deep_dict, features_array, 
 	test_labels = np.array(test_labels)
 	test_predictions = np.array(test_predictions)
 	
-	if save is True:
-		with open(args.model_weights_path[:-14] + 'val' + '_predictions.pickle', 'wb') as f:
-			pickle.dump(test_predictions, f)
-
-		with open(args.model_weights_path[:-14] + 'val' + '_labels.pickle', 'wb') as f:
-			pickle.dump(test_labels, f)
-	
 	auc_value = roc_auc_score(test_labels, test_predictions)
 	
 	test_predictions = (test_predictions>0.5)*1
@@ -251,10 +227,6 @@ def val(test_list, dataset_split_dict, dataset_split_deep_dict, features_array, 
 		
 	avg_score = bag_score / len(test_list)
 	bag_score_classwise = bag_score_classwise/bag_number_classwise
-	
-	if save is True:
-		with open(args.model_weights_path[:-14] +  'val' + '_class_prediction_bag.pickle', 'wb') as f:
-			pickle.dump(test_predictions, f)
 	
 	return total_loss / len(test_list), avg_score, auc_value, bag_score_classwise
 	
