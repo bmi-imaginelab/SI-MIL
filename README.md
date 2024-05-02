@@ -53,7 +53,7 @@ python inference.py   --dataset_split_path 'train_dict.pickle' --dataset_split_p
 
 ## Visualization and Interpretability analysis
 
-After running the inference, refer to these notebooks for generating WSI-level Patch-Feature importance reports and conducting Cohort-level univariate/multivariate Interpretation analysis following SI-MIL training:
+After running the inference, refer to these notebooks for generating WSI-level Patch-Feature importance reports and conducting Cohort-level univariate/multivariate Interpretation analysis using trained SI-MIL model:
 
 * **Patch-Feature importance report:** [./.ipynb](./.ipynb)
 * **Cohort-level Interpretation:** [./.ipynb](./.ipynb) 
