@@ -121,18 +121,17 @@ def main():
 	parser.add_argument('--features_path', default='', type=str, help='Dataset folder name')
 
 	# path for Deep features
-	parser.add_argument('--dataset_split_deep_path', default='', type=str, help='Dataset folder name')
 	parser.add_argument('--dataset_split_deep_path_test', default='', type=str, help='Dataset folder name')
-	parser.add_argument('--features_deep_path', default='', type=str, help='Dataset folder name')
 	parser.add_argument('--features_deep_path_test', default='', type=str, help='Dataset folder name')
 
 	parser.add_argument('--model_weights_path', default='MIL_experiment/', type=str, help='Dataset folder name')
 	
 	parser.add_argument('--use_additive', default='yes', type=str, help=' no, yes. for grouping in wandb')
+	parser.add_argument('--stop_gradient', default='no', type=str, help=' no, yes. for grouping in wandb')
+	parser.add_argument('--no_projection', default='yes', type=str, help=' no, yes. for grouping in wandb')
 	parser.add_argument('--top_k', default=20, type=int, help='')
 	parser.add_argument('--temperature', default=3.0, type=float, help='')
 	parser.add_argument('--percentile', default=0.75, type=float, help='')
-	parser.add_argument('--mlp_layers', default=4, type=int, help='')
 
 	args = parser.parse_args()
 	
@@ -148,14 +147,11 @@ def main():
 	with open(args.dataset_split_path_test, 'rb') as f:
 		dataset_split_dict_test = pickle.load(f)
 	
-	with open(args.dataset_split_deep_path, 'rb') as f:
-		dataset_split_deep_dict = pickle.load(f)
-	
+
 	with open(args.dataset_split_deep_path_test, 'rb') as f:
 		dataset_split_deep_dict_test = pickle.load(f)
 
 	
-	features_deep_array = torch.load(args.features_deep_path)
 	features_deep_array_test = torch.load(args.features_deep_path_test)
 	
 	
@@ -166,14 +162,15 @@ def main():
 	features_array = np.array(features_array)
 	
 	feats_size = features_array.shape[1]
-	feats_size_deep = features_deep_array.shape[1]
+	feats_size_deep = features_deep_array_test.shape[1]
 		
 	criterion = nn.BCELoss()
 	
+	
+	
 	import si_mil as mil
 	
-	
-	b_classifier = mil.BClassifier(input_size=feats_size, input_size_deep=feats_size_deep, output_class=args.num_classes, stop_gradient='no', no_projection='yes', top_k=args.top_k, temperature=args.temperature, percentile=args.percentile, mlp_layers=args.mlp_layers).cuda()
+	b_classifier = mil.BClassifier(input_size=feats_size, input_size_deep=feats_size_deep, output_class=args.num_classes, stop_gradient=args.stop_gradient, no_projection=args.no_projection, top_k=args.top_k, temperature=args.temperature, percentile=args.percentile).cuda()
 	
 	milnet = mil.MILNet(b_classifier).cuda()
 
