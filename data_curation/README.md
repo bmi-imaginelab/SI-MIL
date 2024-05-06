@@ -6,7 +6,7 @@ This repository includes scripts designed to extract both Path Expert and Deep f
 
 ### Setting Up Your Dataset
 
-1. Create a folder named `test_dataset`. You can rename this folder if necessary.
+1. Download a folder named `test_dataset` from this repo, containing the feature name pickle files. You can rename this folder if necessary.
 2. Inside `test_dataset`, create another folder named `slides` and add all your WSIs there.
 
 ### Extracting WSI-Level Cell Segmentation
