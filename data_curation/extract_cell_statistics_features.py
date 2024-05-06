@@ -147,7 +147,7 @@ def run_extraction(cell_pickle_path):
 			
 			print(cell_pickle_path)
 
-			image_patches_list = np.array(all_list)[all_dict[cell_pickle_path.split('.')[0]][0]:all_dict[cell_pickle_path.split('.')[0]][1]]
+			image_patches_list = np.array(all_list)[all_dict[cell_pickle_path[:-7]][0]:all_dict[cell_pickle_path[:-7]][1]]
 
 			with open(cell_properties_path + '/' + cell_pickle_path, 'rb') as f:
 				cell_prop = pickle.load(f)
