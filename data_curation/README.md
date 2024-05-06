@@ -54,13 +54,13 @@ Extract various features from the patches:
 - **Social Network Analysis:**
 
   ```bash
-  python extract_cell_statistics_features.py --data_path 'test_dataset/slides' --cell_properties_path 'test_dataset/cell_property' --list_dict_path 'test_dataset/patches' --save_path 'test_dataset/Handcrafted_features/sna_statistics'
+  python extract_sna_features.py --data_path 'test_dataset/slides' --cell_properties_path 'test_dataset/cell_property' --list_dict_path 'test_dataset/patches' --save_path 'test_dataset/Handcrafted_features/sna_statistics'
   ```
 
 - **Athena Based Heterogeneity:**
 
   ```bash
-  python extract_cell_statistics_features.py --data_path 'test_dataset/slides' --cell_properties_path 'test_dataset/cell_property' --list_dict_path 'test_dataset/patches' --save_path 'test_dataset/Handcrafted_features/athena_statistics'
+  python extract_athena_spatial_features.py --data_path 'test_dataset/slides' --cell_properties_path 'test_dataset/cell_property' --list_dict_path 'test_dataset/patches' --save_path 'test_dataset/Handcrafted_features/athena_statistics'
   ```
 
 #### Combining Features
