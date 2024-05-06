@@ -231,7 +231,7 @@ def organize_patches(img_slide, out_base, level=(0,), tile_size=224, overlap=0, 
 		limit_bounds=limit_bounds)
 	n_levels = n_levels.level_count
 	
-	img_name = img_slide.split(os.sep)[-1].split('.')[0]
+	img_name = os.path.splitext(img_slide.split(os.sep)[-1])[0]
 	bag_path = os.path.join(out_base, img_name)
 	os.makedirs(bag_path, exist_ok=True)
 	if len(level)==1:
@@ -293,8 +293,7 @@ if __name__ == '__main__':
 	all_slides = []
 	
 	for i in os.listdir(args.dataset):
-		if 'DX' in i:
-			all_slides.append(args.dataset +'/' + i)
+		all_slides.append(args.dataset +'/' + i)
 	
 	print(len(all_slides), len(os.listdir(args.dataset)))
 	
@@ -303,7 +302,7 @@ if __name__ == '__main__':
 		levels = tuple(args.magnifications)
 		print(levels, np.array(levels))   # level = 3, we want 5x when max magnification is 40 (40/2^^3)
 		print(c_slide)
-		if not os.path.isdir(out_base + '/' + c_slide.split('/')[-1].split('.')[0]):
+		if not os.path.isdir(out_base + '/' + os.path.splitext(c_slide.split(os.sep)[-1])[0]):
 			print('Process slide {}/{}'.format(idx+1, len(all_slides)))
 
 			try:
