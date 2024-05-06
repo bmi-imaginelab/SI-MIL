@@ -104,6 +104,7 @@ TODO
 - Make sure to use absolute paths when running any scripts for consistency and to avoid path errors.
 - This pipeline assumes that all WSIs are available at 40X magnification. Discard any slides without 40X magnification.
 - For patch extraction, magnification of 5X and size of 224x224 px is set as default. The deep features are extracted at 5X from these patches, whereas PathExpert features are extracted from corresponding patch of size 1792x1792 px at 40X (same field-of-view as patch at 5X).
+- Currently this codebase works only for binary classification tasks. The loss function and interpretability analysis would need to be modified if downstream task is changed to multi-class or survival prediction. 
 
 ## Links and References
 
