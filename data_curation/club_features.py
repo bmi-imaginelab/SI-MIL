@@ -43,6 +43,7 @@ with open(os.path.join(column_name_path,'athena_column_name.pickle'), 'rb') as f
 athena_dir = feat_path + '/athena_statistics'
 cell_dir = feat_path + '/cell_statistics'
 sna_dir = feat_path + '/sna_statistics'
+tissue_dir = feat_path + '/tissue_statistics'
 
 
 all_dict_key_list = []
@@ -113,8 +114,24 @@ for d in tqdm(feat_list):
 df_athena = pd.DataFrame.from_dict(merged_dict, orient='index', columns=athena_column_name)
 
 
-features_csv = pd.concat((df_cell, df_sna, df_athena), axis=1)
 
+select_dir = tissue_dir
+feat_list = []
+
+for i in tqdm(all_dict_key_list):
+	with open(select_dir + '/' + i, 'rb') as f:
+		temp_feat = pickle.load(f)
+		
+	feat_list.append(temp_feat)
+		
+merged_dict = {}
+
+for d in tqdm(feat_list):
+	merged_dict.update(d)
+	  
+df_tissue = pd.DataFrame.from_dict(merged_dict, orient='index', columns=['percent_of_cell_region', 'percent_of_tissue_region', 'percent_of_background_region'])
+
+features_csv = pd.concat((df_cell, df_sna, df_athena, df_tissue), axis=1)
 
 ####################################################################
 
