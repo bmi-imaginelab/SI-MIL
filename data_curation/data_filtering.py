@@ -4,34 +4,50 @@ import pandas as pd
 import numpy as np
 from tqdm import tqdm
 import argparse
+import json
 
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--feat_path', type=str, default = 'test_dataset/Handcrafted_features')
-parser.add_argument('--save_path', type=str, default = 'test_dataset')
+parser.add_argument('--save_path', type=str, default = 'test_dataset/Handcrafted_features')
+parser.add_argument('--train_test_dict_path', type=str, default = 'test_dataset')
 parser.add_argument('--list_dict_path', type=str, default = 'test_dataset/patches')
 parser.add_argument('--bins', type=int, default = 10) 
 parser.add_argument('--norm_feat', type=str, default = 'bin')
+parser.add_argument('--remove_noneoplastic', type=str, default = 'False')  # put it 'True' for Lung cancer since it doesn't contains noneoplastic cell type
 
 args = parser.parse_args()
 
 save_path = args.save_path
 norm_feat = args.norm_feat
 bins = args.bins
+remove_noneoplastic = args.remove_noneoplastic
+
+features_csv = pd.read_csv(os.path.join(args.feat_path, 'cell_athena_sna.csv'))
 
 
-features_csv = pd.read_csv(os.path.join(feat_path, 'cell_athena_sna.csv'))
+with open(args.train_test_dict_path, "r") as file:
+    train_test_dict = json.load(file)
+	
+with open(os.path.join(args.list_dict_path, 'all_dict.pickle'), 'rb') as f:
+	all_dict = pickle.load(f)
 
-dataset_split_path = os.path.join(list_dict_path, 'train_dict.pickle')
-dataset_split_path_test = os.path.join(list_dict_path, 'test_dict.pickle')
 
+dataset_split_dict = {}
+dataset_split_dict_test = {}
 
-with open(dataset_split_path, 'rb') as f:
-	dataset_split_dict = pickle.load(f)
-
-with open(dataset_split_path_test, 'rb') as f:
-	dataset_split_dict_test = pickle.load(f)
-
+for i in all_dict:
+    for j in train_test_dict['train_dict']:
+        if i in j:
+            dataset_split_dict[i] = all_dict[i]
+            dataset_split_dict[i].append(train_test_dict['train_dict'][j])
+            
+            
+    for j in train_test_dict['test_dict']:
+        if i in j:
+            dataset_split_dict_test[i] = all_dict[i]
+            dataset_split_dict_test[i].append(train_test_dict['test_dict'][j])
+            
 	
 features_csv = features_csv.set_index('Unnamed: 0')
 
@@ -57,7 +73,6 @@ for i, col in tqdm(enumerate(features_csv.columns)):
 		_, intervals = pd.qcut(features_csv.iloc[train_index_select_list, i], bins, labels=False, retbins=True, duplicates='drop')
 
 		normalized_df[col] = pd.cut(features_csv[col], bins=intervals, labels=False, include_lowest=True)
-
 
 	except:
 		normalized_df[col] = -1
@@ -92,13 +107,6 @@ for i,_ in enumerate(list_filtered):
 	list_filtered[i] = _.split('/')[-2] + '/' + _.split('/')[-1].split('_')[0] + '_' + str(int(int(_.split('/')[-1].split('_')[1]))) + '_' + str(int(int(_.split('/')[-1].split('_')[2].split('.')[0])))
 	
 features_csv.index = list_filtered
-
-
-with open(dataset_split_path, 'rb') as f:
-	dataset_split_dict = pickle.load(f)
-
-with open(dataset_split_path_test, 'rb') as f:
-	dataset_split_dict_test = pickle.load(f)
 
 	
 dataset_split_dict_train_filtered = dict()
@@ -212,9 +220,6 @@ normalized_df = normalized_df.iloc[filter_indices]
 
 print('After removing intervals', normalized_df.shape)
 
-	
-	
-	
 
 ##################################################################################
 hovernet_mag = 40
@@ -294,27 +299,20 @@ print(list(normalized_df.columns)[:10])
 
 normalized_df.to_csv(os.path.join(save_path, 'binned_hcf.csv'))
 
-features_csv = features_csv.fillna(-1)
+# features_csv = features_csv.fillna(-1)
 
 
-print(features_csv.shape)
-print(list(features_csv.columns)[:10])
-features_csv = features_csv[final_select_concepts]
-print(features_csv.shape)
-print(list(features_csv.columns)[:10])
+# print(features_csv.shape)
+# print(list(features_csv.columns)[:10])
+# features_csv = features_csv[final_select_concepts]
+# print(features_csv.shape)
+# print(list(features_csv.columns)[:10])
 
 
-features_csv.to_csv(os.path.join(save_path, 'raw_hcf.csv'))
+# features_csv.to_csv(os.path.join(save_path, 'raw_hcf.csv'))
 
 
-list_filtered = list(features_csv.index)
-
-
-with open(dataset_split_path, 'rb') as f:
-	dataset_split_dict = pickle.load(f)
-
-with open(dataset_split_path_test, 'rb') as f:
-	dataset_split_dict_test = pickle.load(f)
+list_filtered = list(normalized_df.index)
 
 	
 dataset_split_dict_train_filtered = dict()
