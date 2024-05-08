@@ -82,8 +82,11 @@ Note: Adjust the `--remove_cell_type` option if necessary, based on the classes 
 
 #### Filtering patches and feature normalization
 
-TODO
+Filter the patches based on heuristics and binning normalization based on training patches list:
 
+```bash
+python data_filtering.py --feat_path 'test_dataset/Handcrafted_features' --save_path 'test_dataset/Handcrafted_features' --train_test_dict_path 'test_dataset/train_test_dict.json' --list_dict_path 'test_dataset/patches' --bins 10 --norm_feat 'bin' --remove_noneoplastic 'False'
+```
 
 ### Deep Feature Extraction Pipeline
 
