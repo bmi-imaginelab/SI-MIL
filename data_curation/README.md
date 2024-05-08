@@ -92,11 +92,13 @@ python data_filtering.py --feat_path 'test_dataset/Handcrafted_features' --save_
 
 #### Feature Extraction
 
-Extract features from the patches using provided self-supervised (DINO based) ViT-S for each of the corresponding datasets used in this study. 
+Extract features from the patches using Deep Neural Network (specifically ViT-S, but can be modified):
 
+```bash
+python extract_deep_features.py --patch_path 'test_dataset/patches' --save_path 'test_dataset/Deep_features' 
+```
 
-We provide the following pretrained VIT-S models with DINO SSL on the WSIs from training set of corresponding datasets used in SI-MIL paper:
-
+We provide the following pretrained VIT-S models with DINO SSL on the WSIs from training set of corresponding datasets used in this study:
 
 |  Dataset | # Training  images | Download link |
 |:--------:|:------------------:|:-------------:|
@@ -105,8 +107,6 @@ We provide the following pretrained VIT-S models with DINO SSL on the WSIs from 
 | TCGA-CRC 5X |        0M      |   [link](https://drive.google.com/drive/folders/1r1Kgcgy34rP3O-X4AqhQ09Sf1OZdHvm2?usp=sharing)            |
 
 
-
-TODO
 
 
 ## Important Notes
