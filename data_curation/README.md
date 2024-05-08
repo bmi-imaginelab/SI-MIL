@@ -48,20 +48,27 @@ Extract various features from the patches:
 - **Cell Statistics:**
 
   ```bash
-  python extract_cell_statistics_features.py --data_path 'test_dataset/slides' --cell_properties_path 'test_dataset/cell_property' --list_dict_path 'test_dataset/patches' --save_path 'test_dataset/Handcrafted_features/cell_statistics'
+  python extract_cell_statistics_features.py --data_path 'test_dataset/slides' --cell_properties_path 'test_dataset/cell_property' --list_dict_path 'test_dataset/patches' --save_path 'test_dataset/Handcrafted_features/cell_statistics'  --workers 10
   ```
 
 - **Social Network Analysis:**
 
   ```bash
-  python extract_sna_features.py --data_path 'test_dataset/slides' --cell_properties_path 'test_dataset/cell_property' --list_dict_path 'test_dataset/patches' --save_path 'test_dataset/Handcrafted_features/sna_statistics'
+  python extract_sna_features.py --data_path 'test_dataset/slides' --cell_properties_path 'test_dataset/cell_property' --list_dict_path 'test_dataset/patches' --save_path 'test_dataset/Handcrafted_features/sna_statistics'  --workers 10
   ```
 
 - **Athena Based Heterogeneity:**
 
   ```bash
-  python extract_athena_spatial_features.py --data_path 'test_dataset/slides' --cell_properties_path 'test_dataset/cell_property' --list_dict_path 'test_dataset/patches' --save_path 'test_dataset/Handcrafted_features/athena_statistics'
+  python extract_athena_spatial_features.py --data_path 'test_dataset/slides' --cell_properties_path 'test_dataset/cell_property' --list_dict_path 'test_dataset/patches' --save_path 'test_dataset/Handcrafted_features/athena_statistics'  --workers 10
   ```
+
+- **Tissue features:**
+
+  ```bash
+  python extract_tissue_features.py --data_path 'test_dataset/slides' --hovernet_json_path 'test_dataset/Hovernet_output/json' --list_dict_path 'test_dataset/patches' --save_path 'test_dataset/Handcrafted_features/tissue_statistics'  --workers 10 --background_threshold 220
+  ```
+
 
 #### Combining Features
 
