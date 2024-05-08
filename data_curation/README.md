@@ -7,7 +7,7 @@ This repository includes scripts designed to extract both Path Expert and Deep f
 ### Setting Up Your Dataset
 
 1. Download a folder named `test_dataset` from this repo, containing the feature name pickle files. You can rename this folder if necessary.
-2. Inside `test_dataset`, create another folder named `slides` and add all your WSIs there. Make a JSON file similar as https://github.com/bmi-imaginelab/SI-MIL/blob/main/test_dataset/train_test_dict.json, 
+2. Inside `test_dataset`, create another folder named `slides` and add all your WSIs there. Following, make a JSON file to store the train and test split with WSIs names and their binary label (0,1) similar as https://github.com/bmi-imaginelab/SI-MIL/blob/main/test_dataset/train_test_dict.json.
 
 ### Extracting WSI-Level Cell Segmentation
 
@@ -100,9 +100,9 @@ We provide the following pretrained VIT-S models with DINO SSL:
 
 |  Dataset | # Training  images | Download link |
 |:--------:|:------------------:|:-------------:|
-| TCGA-Lung 5x |       0 Mil       |   [link](https://drive.google.com/drive/folders/1kZ69wVEHV3k3Zr1hgS3kftz9cfNb9BxA?usp=sharing)            |
-| TCGA-BRCA 5x |        0 Mil      |   [link](https://drive.google.com/drive/folders/1r1Kgcgy34rP3O-X4AqhQ09Sf1OZdHvm2?usp=sharing)            |
-| TCGA-CRC 5x |        0 Mil      |   [link](https://drive.google.com/drive/folders/1r1Kgcgy34rP3O-X4AqhQ09Sf1OZdHvm2?usp=sharing)            |
+| TCGA-Lung 5X |       0 Mil       |   [link](https://drive.google.com/drive/folders/1kZ69wVEHV3k3Zr1hgS3kftz9cfNb9BxA?usp=sharing)            |
+| TCGA-BRCA 5X |        0 Mil      |   [link](https://drive.google.com/drive/folders/1r1Kgcgy34rP3O-X4AqhQ09Sf1OZdHvm2?usp=sharing)            |
+| TCGA-CRC 5X |        0 Mil      |   [link](https://drive.google.com/drive/folders/1r1Kgcgy34rP3O-X4AqhQ09Sf1OZdHvm2?usp=sharing)            |
 
 
 
