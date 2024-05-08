@@ -299,19 +299,6 @@ print(list(normalized_df.columns)[:10])
 
 normalized_df.to_csv(os.path.join(save_path, 'binned_hcf.csv'))
 
-# features_csv = features_csv.fillna(-1)
-
-
-# print(features_csv.shape)
-# print(list(features_csv.columns)[:10])
-# features_csv = features_csv[final_select_concepts]
-# print(features_csv.shape)
-# print(list(features_csv.columns)[:10])
-
-
-# features_csv.to_csv(os.path.join(save_path, 'raw_hcf.csv'))
-
-
 list_filtered = list(normalized_df.index)
 
 	
