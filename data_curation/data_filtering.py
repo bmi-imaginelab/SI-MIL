@@ -23,6 +23,13 @@ norm_feat = args.norm_feat
 bins = args.bins
 remove_noneoplastic = args.remove_noneoplastic
 
+
+hovernet_mag = 40
+patch_extract_mag = 5
+patch_mag_ratio = hovernet_mag/patch_extract_mag
+height = 224*patch_mag_ratio
+width = 224*patch_mag_ratio
+
 features_csv = pd.read_csv(os.path.join(args.feat_path, 'cell_athena_sna.csv'))
 
 
@@ -50,21 +57,16 @@ for i in all_dict:
             
 	
 features_csv = features_csv.set_index('Unnamed: 0')
-
-print(features_csv.shape)
-
 	
 bags_path = list(dataset_split_dict.keys())
-np.random.seed(0)
-np.random.shuffle(bags_path)
 
 train_path = bags_path
-
 
 train_index_select_list = []
 for i in bags_path:
 	train_index_select_list.extend(list(np.arange(dataset_split_dict[i][0], dataset_split_dict[i][1])))
-print(features_csv.shape, features_csv.iloc[train_index_select_list].shape)
+
+print('shape of features_csv', features_csv.shape, 'shape of features_csv training patches', features_csv.iloc[train_index_select_list].shape)
 
 
 normalized_df = features_csv.copy()
@@ -91,15 +93,12 @@ if remove_noneoplastic == 'False':
 	low_cell_patches = np.intersect1d(low_cell_patches, np.where(normalized_df["number of no-neoplastic cells"]==0)[0])
 
 print('low_cell_patches ',low_cell_patches.shape, ' cell_percentage ', cell_percentage.shape, 'back_percentage ', back_percentage.shape)
-print(np.intersect1d(cell_percentage, back_percentage).shape)
+print('np.intersect1d(cell_percentage, back_percentage).shape',np.intersect1d(cell_percentage, back_percentage).shape)
 
 remove_low_cell_patches = np.intersect1d(np.intersect1d(cell_percentage, back_percentage), low_cell_patches)
 
-print(remove_low_cell_patches.shape)
-
 filter_indices = np.setdiff1d(np.intersect1d(cell_percentage, back_percentage), remove_low_cell_patches)
-print(filter_indices.shape)
-
+print('filter_indices.shape', filter_indices.shape)
 
 list_filtered = list(features_csv.index)
 
@@ -160,8 +159,6 @@ for i in dataset_split_dict_test:
 		
 	
 bags_path = list(dataset_split_dict_train_filtered.keys())
-np.random.seed(0)
-np.random.shuffle(bags_path)
 
 train_path = bags_path
 
@@ -169,8 +166,6 @@ train_path = bags_path
 train_index_select_list = []
 for i in bags_path:
 	train_index_select_list.extend(list(np.arange(dataset_split_dict_train_filtered[i][0], dataset_split_dict_train_filtered[i][1])))
-print(features_csv.shape, features_csv.iloc[train_index_select_list].shape)
-
 
 
 if norm_feat == 'max':
@@ -211,22 +206,13 @@ elif norm_feat == 'none':
 	normalized_df = features_csv.copy()
 	normalized_df = normalized_df.fillna(-1)
 	
-	
-features_csv = features_csv.iloc[filter_indices]
 
-print('After removing intervals', features_csv.shape)
 
 normalized_df = normalized_df.iloc[filter_indices]
 
 print('After removing intervals', normalized_df.shape)
 
 
-##################################################################################
-hovernet_mag = 40
-patch_extract_mag = 5
-patch_mag_ratio = hovernet_mag/patch_extract_mag
-height = 224*patch_mag_ratio
-width = 224*patch_mag_ratio
 		
 if remove_noneoplastic == 'True':
 	cell_parse = 5
@@ -242,15 +228,20 @@ for i in range(1, cell_parse):
 		cell_stat_column_name.append('number of ' + labeldict[i] + ' cells')
 		
 for i in range(1, cell_parse):
+	
 	for cell_feat in ["area", "orientation", "eccentricity", "solidity", "intensity_mean", "intensity_std", "contrast", "dissimilarity", "homogeneity", "energy"]:    
+		
 		for stats in ['mean', 'std', 'skew', 'kurtosis']:
-						cell_stat_column_name.append(labeldict[i] + " cells: " + stats + ' of their '+  cell_feat)
-print(len(cell_stat_column_name))
+			
+				cell_stat_column_name.append(labeldict[i] + " cells: " + stats + ' of their '+  cell_feat)
+print('len of cell_stat_column_name',len(cell_stat_column_name))
+
 sna_column_name = []
 for cell_feat in ["degree", "clustering_coefficient", "closeness_centrality", "degree_centrality"]:  
 		for stats in ['max', 'mean', 'std', 'skew', 'kurtosis']:
 				sna_column_name.append(stats + " of cells' "+  cell_feat)
-print(len(sna_column_name))
+				
+print('len of sna_column_name',len(sna_column_name))
 
 		
 athena_column_name = []
@@ -282,7 +273,7 @@ for i in list(labeldict.values())[1:]:
 		athena_column_name.append('Infiltration of neoplastic cells in '+ i+ ' region')
 		
 
-print(len(athena_column_name))
+print('len of athena_column_name',len(athena_column_name))
 
 	
 final_select_concepts = cell_stat_column_name
@@ -290,18 +281,13 @@ final_select_concepts.extend(sna_column_name)
 final_select_concepts.extend(athena_column_name)
 
 ##################################################################################	
-print(normalized_df.shape)
-print(list(normalized_df.columns)[:10])
-normalized_df = normalized_df[final_select_concepts]
-print(normalized_df.shape)
-print(list(normalized_df.columns)[:10])
 
+normalized_df = normalized_df[final_select_concepts]
 
 normalized_df.to_csv(os.path.join(save_path, 'binned_hcf.csv'))
 
 list_filtered = list(normalized_df.index)
 
-	
 dataset_split_dict_train_filtered = dict()
 dataset_split_dict_test_filtered = dict()
 
