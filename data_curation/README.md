@@ -17,10 +17,10 @@ Clone [HoVer-Net](https://github.com/vqdang/hover_net.git) repository, and then 
 python run_infer.py \
 --gpu='0' \
 --nr_types=6 \
---type_info_path=type_info_pannuke.json \
+--type_info_path=/path/to/json/type_info_pannuke.json \
 --batch_size=100 \
 --model_mode=fast \
---model_path=hovernet_fast_pannuke_type_tf2pytorch.tar \
+--model_path=/path/to/model/hovernet_fast_pannuke_type_tf2pytorch.tar \
 --nr_inference_workers=6 \
 --nr_post_proc_workers=6 \
 wsi \
