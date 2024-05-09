@@ -10,7 +10,7 @@ Official code for our CVPR 2024 publication [SI-MIL: Taming Deep MIL for Self-In
 To install python dependencies, 
 
 ```
-conda env create -f environment.yaml
+conda env create -f environment.yaml  to do
 conda activate simil
 ```
 
