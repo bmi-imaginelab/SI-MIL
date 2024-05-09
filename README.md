@@ -57,8 +57,9 @@ After training the interpretable SI-MIL model, run the following command to eval
 ```
 python inference.py   --dataset_split_path 'train_dict.pickle' --dataset_split_path_test 'test_dict.pickle'  \
 --dataset_split_deep_path_test 'test_dict_dino.pickle' --features_deep_path_test 'testfeat_dino.pth' \
---features_path 'binned_hcf.csv' --model_weights_path 'MIL_experiment/path/to/model weights' --top_k 20 \
---gpu_index 0  --use_additive 'yes' --temperature 3.0 --percentile 0.75  --no_projection 'yes' --stop_gradient 'no' 
+--features_path 'binned_hcf.csv' --model_weights_path 'MIL_experiment/path/to/model weights' \
+--top_k 20 --gpu_index 0  --use_additive 'yes' --temperature 3.0 --percentile 0.75  \
+--no_projection 'yes' --stop_gradient 'no' 
 ```
 
 ## Visualization and Interpretability analysis
