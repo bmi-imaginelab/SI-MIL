@@ -43,7 +43,10 @@ To be consistent with our study, please use model_path=hovernet_fast_pannuke_typ
 Run the following command to extract cell properties:
 
 ```bash
-python extract_properties.py --data_path 'test_dataset/slides' --json_path 'test_dataset/Hovernet_output/json' --save_path 'test_dataset/cell_property' --workers 10
+python extract_properties.py --data_path 'test_dataset/slides' \
+--json_path 'test_dataset/Hovernet_output/json' \
+--save_path 'test_dataset/cell_property' \
+--workers 10
 ```
 
 #### Patch Extraction
@@ -51,7 +54,9 @@ python extract_properties.py --data_path 'test_dataset/slides' --json_path 'test
 To extract patches suitable for feature extraction:
 
 ```bash
-python deepzoom_tiler_organ.py --dataset 'test_dataset/slides' --save_path 'test_dataset/patches' --workers 10
+python deepzoom_tiler_organ.py --dataset 'test_dataset/slides' \
+--save_path 'test_dataset/patches' \
+--workers 10
 ```
 
 #### Constructing Patch Dictionary
@@ -69,25 +74,42 @@ Extract various features from the patches:
 - **Cell Statistics:**
 
   ```bash
-  python extract_cell_statistics_features.py --data_path 'test_dataset/slides' --cell_properties_path 'test_dataset/cell_property' --list_dict_path 'test_dataset/patches' --save_path 'test_dataset/Handcrafted_features/cell_statistics'  --workers 10
+  python extract_cell_statistics_features.py --data_path 'test_dataset/slides' \
+  --cell_properties_path 'test_dataset/cell_property' \
+  --list_dict_path 'test_dataset/patches' \
+  --save_path 'test_dataset/Handcrafted_features/cell_statistics'  \
+  --workers 10
   ```
 
 - **Social Network Analysis:**
 
   ```bash
-  python extract_sna_features.py --data_path 'test_dataset/slides' --cell_properties_path 'test_dataset/cell_property' --list_dict_path 'test_dataset/patches' --save_path 'test_dataset/Handcrafted_features/sna_statistics'  --workers 10
+  python extract_sna_features.py --data_path 'test_dataset/slides' \
+  --cell_properties_path 'test_dataset/cell_property' \
+  --list_dict_path 'test_dataset/patches' \
+  --save_path 'test_dataset/Handcrafted_features/sna_statistics'  \
+  --workers 10
   ```
 
 - **Athena Based Heterogeneity:**
 
   ```bash
-  python extract_athena_spatial_features.py --data_path 'test_dataset/slides' --cell_properties_path 'test_dataset/cell_property' --list_dict_path 'test_dataset/patches' --save_path 'test_dataset/Handcrafted_features/athena_statistics'  --workers 10
+  python extract_athena_spatial_features.py --data_path 'test_dataset/slides' \
+  --cell_properties_path 'test_dataset/cell_property' \
+  --list_dict_path 'test_dataset/patches' \
+  --save_path 'test_dataset/Handcrafted_features/athena_statistics'  \
+  --workers 10
   ```
 
 - **Tissue features:**
 
   ```bash
-  python extract_tissue_features.py --data_path 'test_dataset/slides' --hovernet_json_path 'test_dataset/Hovernet_output/json' --list_dict_path 'test_dataset/patches' --save_path 'test_dataset/Handcrafted_features/tissue_statistics'  --workers 10 --background_threshold 220
+  python extract_tissue_features.py --data_path 'test_dataset/slides' \
+  --hovernet_json_path 'test_dataset/Hovernet_output/json' \
+  --list_dict_path 'test_dataset/patches' \
+  --save_path 'test_dataset/Handcrafted_features/tissue_statistics' \
+  --workers 10 \
+  --background_threshold 220
   ```
 
 
@@ -96,7 +118,10 @@ Extract various features from the patches:
 Combine all extracted features into a final dataset:
 
 ```bash
-python club_features.py --feat_path 'test_dataset/Handcrafted_features' --column_name_path 'test_dataset' --list_dict_path 'test_dataset/patches' --remove_cell_type 'none'
+python club_features.py --feat_path 'test_dataset/Handcrafted_features' \
+--column_name_path 'test_dataset' \
+--list_dict_path 'test_dataset/patches' \
+--remove_cell_type 'none'
 ```
 
 Note: Adjust the `--remove_cell_type` option if necessary, based on the classes of cells that are not present in your dataset of WSIs. For eg. we removed 'no-neoplastic' cell category in TCGA-Lung since that class of cell doesn't exists in PanNuke dataset for lung organ.
@@ -106,7 +131,12 @@ Note: Adjust the `--remove_cell_type` option if necessary, based on the classes 
 Filter the patches based on heuristics and binning normalization based on training patches list:
 
 ```bash
-python data_filtering.py --feat_path 'test_dataset/Handcrafted_features' --save_path 'test_dataset/Handcrafted_features' --train_test_dict_path 'test_dataset/train_test_dict.json' --list_dict_path 'test_dataset/patches' --bins 10 --norm_feat 'bin' --remove_noneoplastic 'False'
+python data_filtering.py --feat_path 'test_dataset/Handcrafted_features' \
+--save_path 'test_dataset/Handcrafted_features' \
+--train_test_dict_path 'test_dataset/train_test_dict.json' \
+--list_dict_path 'test_dataset/patches' \
+--bins 10 --norm_feat 'bin' \
+--remove_noneoplastic 'False'
 ```
 
 ### Deep Feature Extraction Pipeline
@@ -116,7 +146,8 @@ python data_filtering.py --feat_path 'test_dataset/Handcrafted_features' --save_
 Extract features from the patches using Deep Neural Network (specifically ViT-S, but can be modified):
 
 ```bash
-python extract_deep_features.py --patch_path 'test_dataset/patches' --save_path 'test_dataset/Deep_features' 
+python extract_deep_features.py --patch_path 'test_dataset/patches' \
+--save_path 'test_dataset/Deep_features' 
 ```
 
 We provide the following VIT-S models (self-supervised with DINO method) on the WSIs from training set of per corresponding dataset used in this study:
