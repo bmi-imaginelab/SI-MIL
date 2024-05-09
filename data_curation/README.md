@@ -11,11 +11,30 @@ This repository includes scripts designed to extract both Path Expert and Deep f
 
 ### Extracting WSI-Level Cell Segmentation
 
-Follow instructions in [HoVer-Net](https://github.com/vqdang/hover_net.git) repository to extract cell segmentation and classification output for each WSI, and save the output in `test_dataset/Hovernet_output`. To be consistent with our study, please use [PanNuke checkpoint](https://drive.google.com/file/d/1SbSArI3KOOWHxRlxnjchO7_MbWzB4lNR/view) for HoVer-Net model. 
+Clone [HoVer-Net](https://github.com/vqdang/hover_net.git) repository, and then install their python environment. To extract cell segmentation and classification output for each WSI, and save the output in `test_dataset/Hovernet_output`, run the following code after changing the directory to cloned HoVer-Net directory:
 
-say inference, give the code to run it. Give json file too.
+```bash
+python run_infer.py \
+--gpu='0' \
+--nr_types=6 \
+--type_info_path=type_info_pannuke.json \
+--batch_size=100 \
+--model_mode=fast \
+--model_path=hovernet_fast_pannuke_type_tf2pytorch.tar \
+--nr_inference_workers=6 \
+--nr_post_proc_workers=6 \
+wsi \
+--input_dir=/test_dataset/slides \
+--proc_mag=40 \
+--cache_path=/cache/ \
+--output_dir=/test_dataset/Hovernet_output/ \
+--input_mask_dir=/test_dataset/Hovernet_output/msk/ \
+--chunk_shape=10000 \
+--save_mask
+```
 
-Note that HoVer-Net framework can be replaced with other cell segmentation and classification models as required, however since the following feature extraction scripts are based on HoVer-Net based output, that's why those scripts would need to be modifed as well. 
+
+To be consistent with our study, please use model_path=hovernet_fast_pannuke_type_tf2pytorch.tar from [PanNuke checkpoint](https://drive.google.com/file/d/1SbSArI3KOOWHxRlxnjchO7_MbWzB4lNR/view), and type_info_path=type_info_pannuke.json from [PanNuke json](https://drive.google.com/file/d/1SbSArI3KOOWHxRlxnjchO7_MbWzB4lNR/view). Note that HoVer-Net framework can be replaced with other cell segmentation and classification models as required, however since the following feature extraction scripts are based on HoVer-Net based output, that's why those scripts would need to be modifed as well. 
 
 ### Path Expert Feature Extraction Pipeline
 
