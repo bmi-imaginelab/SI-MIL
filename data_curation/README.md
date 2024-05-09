@@ -24,7 +24,7 @@ python run_infer.py \
 --nr_inference_workers=6 \
 --nr_post_proc_workers=6 \
 wsi \
---input_dir=/test_dataset/slides \
+--input_dir=/test_dataset/slides/ \
 --proc_mag=40 \
 --cache_path=/cache/ \
 --output_dir=/test_dataset/Hovernet_output/ \
@@ -34,7 +34,7 @@ wsi \
 ```
 
 
-To be consistent with our study, please use model_path=hovernet_fast_pannuke_type_tf2pytorch.tar from [PanNuke checkpoint](https://drive.google.com/file/d/1SbSArI3KOOWHxRlxnjchO7_MbWzB4lNR/view), and type_info_path=type_info_pannuke.json from [PanNuke json]([https://drive.google.com/file/d/1SbSArI3KOOWHxRlxnjchO7_MbWzB4lNR/view](https://github.com/bmi-imaginelab/SI-MIL/blob/main/data_curation/type_info_pannuke.json)). Note that HoVer-Net framework can be replaced with other cell segmentation and classification models as required, however since the following feature extraction scripts are based on HoVer-Net based output, that's why those scripts would need to be modifed as well. 
+To be consistent with our study, please use model_path=hovernet_fast_pannuke_type_tf2pytorch.tar from [PanNuke checkpoint](https://drive.google.com/file/d/1SbSArI3KOOWHxRlxnjchO7_MbWzB4lNR/view), and type_info_path=type_info_pannuke.json from [PanNuke json](https://github.com/bmi-imaginelab/SI-MIL/blob/main/data_curation/type_info_pannuke.json). Note that HoVer-Net framework can be replaced with other cell segmentation and classification models as required, however since the following feature extraction scripts are based on HoVer-Net based output, that's why those scripts would need to be modifed as well. 
 
 ### Path Expert Feature Extraction Pipeline
 
