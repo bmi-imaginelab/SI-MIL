@@ -17,18 +17,18 @@ Clone [HoVer-Net](https://github.com/vqdang/hover_net.git) repository, and then 
 python run_infer.py \
 --gpu='0' \
 --nr_types=6 \
---type_info_path=/path/to/json/type_info_pannuke.json \
+--type_info_path=/path/to/type_info_pannuke.json \
 --batch_size=100 \
 --model_mode=fast \
---model_path=/path/to/model/hovernet_fast_pannuke_type_tf2pytorch.tar \
+--model_path=/path/to/hovernet_fast_pannuke_type_tf2pytorch.tar \
 --nr_inference_workers=6 \
 --nr_post_proc_workers=6 \
 wsi \
---input_dir=/test_dataset/slides/ \
+--input_dir='/test_dataset/slides' \
 --proc_mag=40 \
---cache_path=/cache/ \
---output_dir=/test_dataset/Hovernet_output/ \
---input_mask_dir=/test_dataset/Hovernet_output/msk/ \
+--cache_path='cache' \
+--output_dir='/test_dataset/Hovernet_output' \
+--input_mask_dir='/test_dataset/Hovernet_output/msk' \
 --chunk_shape=10000 \
 --save_mask
 ```
