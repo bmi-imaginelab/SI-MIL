@@ -20,7 +20,8 @@ cd hover_net
 conda env create -f environment.yml
 conda activate hovernet
 pip install torch==1.6.0 torchvision==0.7.0
-gdown --id 1SbSArI3KOOWHxRlxnjchO7_MbWzB4lNR
+pip install gdown
+gdown --id 1SbSArI3KOOWHxRlxnjchO7_MbWzB4lNR  # downloading HoVer-Net PanNuke checkpoint
 ```
 
 Then to extract cell segmentation and classification output for each WSI, and save the output in `test_dataset/Hovernet_output`, run the following command:
