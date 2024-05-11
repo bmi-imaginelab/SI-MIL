@@ -11,16 +11,28 @@ This repository includes scripts designed to extract both Path Expert and Deep f
 
 ### Extracting WSI-Level Cell Segmentation
 
-Clone [HoVer-Net](https://github.com/vqdang/hover_net.git) repository, and then install their python environment. To extract cell segmentation and classification output for each WSI, and save the output in `test_dataset/Hovernet_output`, run the following code after changing the directory to cloned HoVer-Net directory:
+Run the following command to clone [HoVer-Net](https://github.com/vqdang/hover_net.git) repository, and then install their python environment. 
+
+```bash
+
+git clone https://github.com/vqdang/hover_net.git
+cd hover_net
+conda env create -f environment.yml
+conda activate hovernet
+pip install torch==1.6.0 torchvision==0.7.0
+gdown --id 1SbSArI3KOOWHxRlxnjchO7_MbWzB4lNR
+```
+
+Then to extract cell segmentation and classification output for each WSI, and save the output in `test_dataset/Hovernet_output`, run the following command:
 
 ```bash
 python run_infer.py \
 --gpu='0' \
 --nr_types=6 \
---type_info_path=/path/to/type_info_pannuke.json \
+--type_info_path=type_info.json \
 --batch_size=100 \
 --model_mode=fast \
---model_path=/path/to/hovernet_fast_pannuke_type_tf2pytorch.tar \
+--model_path=hovernet_fast_pannuke_type_tf2pytorch.tar \
 --nr_inference_workers=6 \
 --nr_post_proc_workers=6 \
 wsi \
@@ -33,8 +45,7 @@ wsi \
 --save_mask
 ```
 
-
-To be consistent with our study, please use model_path=hovernet_fast_pannuke_type_tf2pytorch.tar from [PanNuke checkpoint](https://drive.google.com/file/d/1SbSArI3KOOWHxRlxnjchO7_MbWzB4lNR/view), and type_info_path=type_info_pannuke.json from [PanNuke json](https://github.com/bmi-imaginelab/SI-MIL/blob/main/data_curation/type_info_pannuke.json). Note that HoVer-Net framework can be replaced with other cell segmentation and classification models as required, however since the following feature extraction scripts are based on HoVer-Net based output, that's why those scripts would need to be modifed as well. 
+To be consistent with our study, please use model_path=hovernet_fast_pannuke_type_tf2pytorch.tar from [PanNuke checkpoint](https://drive.google.com/file/d/1SbSArI3KOOWHxRlxnjchO7_MbWzB4lNR/view). Note that HoVer-Net framework can be replaced with other cell segmentation and classification models as required, however since the following feature extraction scripts are based on HoVer-Net based output, that's why those scripts would need to be modifed as well. 
 
 ### Path Expert Feature Extraction Pipeline
 
