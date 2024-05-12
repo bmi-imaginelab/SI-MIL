@@ -164,7 +164,7 @@ python data_filtering.py --feat_path 'test_dataset/Handcrafted_features' \
 
 #### Feature Extraction
 
-Extract features from the patches using Deep Neural Network (specifically ViT-S, but can be modified):
+Following going through the PathExpert feature extraction process, to extract deep features from the patches using Deep Neural Network (specifically ViT-S, but can be modified), run the following:
 
 ```bash
 python extract_deep_features.py --patch_path 'test_dataset/patches' \
