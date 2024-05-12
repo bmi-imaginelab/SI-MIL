@@ -52,6 +52,7 @@ To be consistent with our study, please use model_path=hovernet_fast_pannuke_typ
 
 Modify the parent_dir path in PathExpert_feature_extraction.sh file to absolute path of `test_dataset`. Assuming the slides and HoVer-Net outputs already exists, run the following bash script to end-to-end extract PathExpert features:
 ```bash
+conda activate simil
 ./PathExpert_feature_extraction.sh
 ```
 
