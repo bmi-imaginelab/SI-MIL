@@ -234,7 +234,7 @@ def val(test_list, dataset_split_dict, dataset_split_deep_dict, features_array, 
 
 
 def main():
-	parser = argparse.ArgumentParser(description='Train ABMIL on 5x patch features learned by dino vit-small')
+	parser = argparse.ArgumentParser(description='Train ABMIL on 5x patch features learned by encoder')
 	parser.add_argument('--num_classes', default=2, type=int, help='Number of output classes [2]')
 	parser.add_argument('--lr', default=0.0002, type=float, help='Initial learning rate [0.0002]')
 	parser.add_argument('--num_epochs', default=40, type=int, help='Number of total training epochs [40|200]')
