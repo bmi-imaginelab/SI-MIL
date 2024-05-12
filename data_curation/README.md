@@ -63,6 +63,7 @@ To manually extract these features one by one, please go through following proce
 Run the following command to extract cell properties:
 
 ```bash
+conda activate simil
 python extract_properties.py --data_path 'test_dataset/slides' \
 --json_path 'test_dataset/Hovernet_output/json' \
 --save_path 'test_dataset/cell_property' \
