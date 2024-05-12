@@ -10,7 +10,7 @@ import json
 parser = argparse.ArgumentParser()
 parser.add_argument('--feat_path', type=str, default = 'test_dataset/Handcrafted_features')
 parser.add_argument('--save_path', type=str, default = 'test_dataset/Handcrafted_features')
-parser.add_argument('--train_test_dict_path', type=str, default = 'test_dataset')
+parser.add_argument('--train_test_dict_path', type=str, default = 'test_dataset/train_test_dict.json')
 parser.add_argument('--list_dict_path', type=str, default = 'test_dataset/patches')
 parser.add_argument('--bins', type=int, default = 10) 
 parser.add_argument('--norm_feat', type=str, default = 'bin')
@@ -79,6 +79,7 @@ for i, col in tqdm(enumerate(features_csv.columns)):
 	except:
 		normalized_df[col] = -1
 
+
 back_percentage = np.where(normalized_df["percent_of_background_region"]<7)[0]
 
 cell_percentage = np.where(normalized_df["percent_of_cell_region"]>1)[0]
@@ -103,13 +104,11 @@ print('filter_indices.shape', filter_indices.shape)
 list_filtered = list(features_csv.index)
 
 for i,_ in enumerate(list_filtered):
-	list_filtered[i] = _.split('/')[-2] + '/' + _.split('/')[-1].split('_')[0] + '_' + str(int(int(_.split('/')[-1].split('_')[1]))) + '_' + str(int(int(_.split('/')[-1].split('_')[2].split('.')[0])))
+	list_filtered[i] = _.split('/')[-2] + '/' + _.split('/')[-1]
 	
 features_csv.index = list_filtered
 
-	
-dataset_split_dict_train_filtered = dict()
-dataset_split_dict_test_filtered = dict()
+dataset_split_dict_train_filtered_temp = dict()
 
 all_dict = dict()
 
@@ -139,33 +138,21 @@ for i in dataset_split_dict:
 			print(i, all_dict[i][1]-all_dict[i][0])
 			continue
 			
-		dataset_split_dict_train_filtered[i] = all_dict[i]
-		dataset_split_dict_train_filtered[i].append(dataset_split_dict[i][-1])
+		dataset_split_dict_train_filtered_temp[i] = all_dict[i]
+		dataset_split_dict_train_filtered_temp[i].append(dataset_split_dict[i][-1])
 	except:
 		continue
 		
 
-for i in dataset_split_dict_test:
-	try:
-		if all_dict[i][1]-all_dict[i][0]<10:
-			print(i, all_dict[i][1]-all_dict[i][0])
-			continue
-			
-		dataset_split_dict_test_filtered[i] = all_dict[i]
-		dataset_split_dict_test_filtered[i].append(dataset_split_dict_test[i][-1])
-		
-	except:
-		continue
-		
 	
-bags_path = list(dataset_split_dict_train_filtered.keys())
+bags_path = list(dataset_split_dict_train_filtered_temp.keys())
 
 train_path = bags_path
 
 
 train_index_select_list = []
 for i in bags_path:
-	train_index_select_list.extend(list(np.arange(dataset_split_dict_train_filtered[i][0], dataset_split_dict_train_filtered[i][1])))
+	train_index_select_list.extend(list(np.arange(dataset_split_dict_train_filtered_temp[i][0], dataset_split_dict_train_filtered_temp[i][1])))
 
 
 if norm_feat == 'max':
@@ -344,3 +331,54 @@ with open(os.path.join(save_path, 'train_dict.pickle'), 'wb') as f:
 
 with open(os.path.join(save_path, 'test_dict.pickle'), 'wb') as f:
 	pickle.dump(dataset_split_dict_test_filtered, f)
+	
+	
+	
+dataset_split_list_train_filtered_deep = []
+dataset_split_list_test_filtered_deep = []
+
+dataset_split_dict_train_filtered_deep = {}
+dataset_split_dict_test_filtered_deep = {}
+
+
+c = 0
+
+for i in dataset_split_dict_train_filtered:
+    dataset_split_list_train_filtered_deep.extend(list_filtered[dataset_split_dict_train_filtered[i][0]:dataset_split_dict_train_filtered[i][1]])
+    
+    dataset_split_dict_train_filtered_deep[i] = [c]
+    c += dataset_split_dict_train_filtered[i][1]-dataset_split_dict_train_filtered[i][0]
+    
+    dataset_split_dict_train_filtered_deep[i].append(c)
+    
+    dataset_split_dict_train_filtered_deep[i].append(dataset_split_dict_train_filtered[i][-1])
+    
+
+c = 0
+
+for i in dataset_split_dict_test_filtered:
+    dataset_split_list_test_filtered_deep.extend(list_filtered[dataset_split_dict_test_filtered[i][0]:dataset_split_dict_test_filtered[i][1]])
+    
+    dataset_split_dict_test_filtered_deep[i] = [c]
+    c += dataset_split_dict_test_filtered[i][1]-dataset_split_dict_test_filtered[i][0]
+    
+    dataset_split_dict_test_filtered_deep[i].append(c)
+    
+    dataset_split_dict_test_filtered_deep[i].append(dataset_split_dict_test_filtered[i][-1])
+
+
+	
+with open(os.path.join(save_path, 'train_list.pickle'), 'wb') as f:
+	pickle.dump(dataset_split_list_train_filtered_deep, f)
+	
+
+with open(os.path.join(save_path, 'test_list.pickle'), 'wb') as f:
+	pickle.dump(dataset_split_list_test_filtered_deep, f)
+	
+	
+with open(os.path.join(save_path, 'train_dict_deep.pickle'), 'wb') as f:
+	pickle.dump(dataset_split_dict_train_filtered_deep, f)
+	
+
+with open(os.path.join(save_path, 'test_dict_deep.pickle'), 'wb') as f:
+	pickle.dump(dataset_split_dict_test_filtered_deep, f)
