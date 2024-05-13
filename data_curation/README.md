@@ -40,6 +40,8 @@ gdown --id 1SbSArI3KOOWHxRlxnjchO7_MbWzB4lNR  # downloading HoVer-Net PanNuke ch
 Then to extract cell segmentation and classification output for each WSI, and save the output in `test_dataset/Hovernet_output`, run the following command:
 
 ```bash
+parent_dir='/path/to/test_dataset'
+
 python run_infer.py \
 --gpu='0' \
 --nr_types=6 \
@@ -50,11 +52,11 @@ python run_infer.py \
 --nr_inference_workers=6 \
 --nr_post_proc_workers=6 \
 wsi \
---input_dir='/test_dataset/slides' \
+--input_dir="$parent_dir/slides" \
 --proc_mag=40 \
 --cache_path='cache' \
---output_dir='/test_dataset/Hovernet_output' \
---input_mask_dir='/test_dataset/Hovernet_output/msk' \
+--output_dir="$parent_dir/Hovernet_output" \
+--input_mask_dir="$parent_dir/Hovernet_output/msk" \
 --chunk_shape=10000 \
 --save_mask
 ```
@@ -76,11 +78,12 @@ To manually extract these features one by one, please go through following proce
 Run the following command to extract cell properties:
 
 ```bash
+parent_dir='/path/to/test_dataset'
+
 conda activate simil
-python extract_properties.py --data_path 'test_dataset/slides' \
---json_path 'test_dataset/Hovernet_output/json' \
---save_path 'test_dataset/cell_property' \
---workers 10
+python extract_properties.py --data_path "$parent_dir/slides" \
+--json_path "$parent_dir/Hovernet_output/json" \
+--save_path "$parent_dir/cell_property" --workers 10
 ```
 
 #### Patch Extraction
@@ -88,9 +91,8 @@ python extract_properties.py --data_path 'test_dataset/slides' \
 To extract patches suitable for feature extraction:
 
 ```bash
-python deepzoom_tiler_organ.py --dataset 'test_dataset/slides' \
---save_path 'test_dataset/patches' \
---workers 10
+python deepzoom_tiler_organ.py --dataset "$parent_dir/slides" \
+--save_path "$parent_dir/patches" --workers 10
 ```
 
 #### Constructing Patch Dictionary
@@ -98,7 +100,7 @@ python deepzoom_tiler_organ.py --dataset 'test_dataset/slides' \
 Construct a list and dictionary of patches:
 
 ```bash
-python patch_dict_list.py --patch_path 'test_dataset/patches'
+python patch_dict_list.py --patch_path "$parent_dir/patches"
 ```
 
 #### Feature Extraction
@@ -108,42 +110,42 @@ Extract various features from the patches:
 - **Cell Statistics:**
 
   ```bash
-  python extract_cell_statistics_features.py --data_path 'test_dataset/slides' \
-  --cell_properties_path 'test_dataset/cell_property' \
-  --list_dict_path 'test_dataset/patches' \
-  --save_path 'test_dataset/features/cell_statistics'  \
+  python extract_cell_statistics_features.py \
+  --data_path "$parent_dir/slides" \
+  --cell_properties_path "$parent_dir/cell_property" \
+  --list_dict_path "$parent_dir/patches" \
+  --save_path "$parent_dir/features/cell_statistics"  \
   --workers 10
   ```
 
 - **Social Network Analysis:**
 
   ```bash
-  python extract_sna_features.py --data_path 'test_dataset/slides' \
-  --cell_properties_path 'test_dataset/cell_property' \
-  --list_dict_path 'test_dataset/patches' \
-  --save_path 'test_dataset/features/sna_statistics'  \
+  python extract_sna_features.py --data_path "$parent_dir/slides" \
+  --cell_properties_path "$parent_dir/cell_property" \
+  --list_dict_path "$parent_dir/patches" \
+  --save_path "$parent_dir/features/sna_statistics"  \
   --workers 10
   ```
 
 - **Athena Based Heterogeneity:**
 
   ```bash
-  python extract_athena_spatial_features.py --data_path 'test_dataset/slides' \
-  --cell_properties_path 'test_dataset/cell_property' \
-  --list_dict_path 'test_dataset/patches' \
-  --save_path 'test_dataset/features/athena_statistics'  \
+  python extract_athena_spatial_features.py --data_path "$parent_dir/slides" \
+  --cell_properties_path "$parent_dir/cell_property" \
+  --list_dict_path "$parent_dir/patches" \
+  --save_path "$parent_dir/features/athena_statistics"  \
   --workers 10
   ```
 
 - **Tissue features:**
 
   ```bash
-  python extract_tissue_features.py --data_path 'test_dataset/slides' \
-  --hovernet_json_path 'test_dataset/Hovernet_output/json' \
-  --list_dict_path 'test_dataset/patches' \
-  --save_path 'test_dataset/features/tissue_statistics' \
-  --workers 10 \
-  --background_threshold 220
+  python extract_tissue_features.py --data_path "$parent_dir/slides" \
+  --hovernet_json_path "$parent_dir/Hovernet_output/json" \
+  --list_dict_path "$parent_dir/patches" \
+  --save_path "$parent_dir/features/tissue_statistics"  \
+  --workers 10 --background_threshold 220
   ```
 
 
@@ -152,10 +154,10 @@ Extract various features from the patches:
 Combine all extracted features into a final dataset:
 
 ```bash
-python club_features.py --feat_path 'test_dataset/features' \
---column_name_path 'test_dataset' \
---list_dict_path 'test_dataset/patches' \
---remove_cell_type 'none'
+python club_features.py --feat_path "$parent_dir/features" \
+--column_name_path "$parent_dir" \
+--list_dict_path "$parent_dir/patches" \
+--remove_cell_type "none"
 ```
 
 Note: Adjust the `--remove_cell_type` option if necessary, based on the classes of cells that are not present in your dataset of WSIs. For eg. we removed 'no-neoplastic' cell category in TCGA-Lung since that class of cell doesn't exists in PanNuke dataset for lung organ.
@@ -165,12 +167,12 @@ Note: Adjust the `--remove_cell_type` option if necessary, based on the classes 
 Filter the patches based on heuristics and binning normalization based on training patches list:
 
 ```bash
-python data_filtering.py --feat_path 'test_dataset/features' \
---save_path 'test_dataset/features' \
---train_test_dict_path 'test_dataset/train_test_dict.json' \
---list_dict_path 'test_dataset/patches' \
---bins 10 --norm_feat 'bin' \
---remove_noneoplastic 'False'
+python data_filtering.py --feat_path "$parent_dir/features" \
+--save_path "$parent_dir/features" \
+--train_test_dict_path "$parent_dir/train_test_dict.json" \
+--list_dict_path "$parent_dir/patches" --bins 10 \
+--norm_feat "bin" --remove_noneoplastic "False"
+
 ```
 
 ### Deep Feature Extraction Pipeline
