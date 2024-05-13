@@ -111,7 +111,7 @@ Extract various features from the patches:
   python extract_cell_statistics_features.py --data_path 'test_dataset/slides' \
   --cell_properties_path 'test_dataset/cell_property' \
   --list_dict_path 'test_dataset/patches' \
-  --save_path 'test_dataset/Handcrafted_features/cell_statistics'  \
+  --save_path 'test_dataset/features/cell_statistics'  \
   --workers 10
   ```
 
@@ -121,7 +121,7 @@ Extract various features from the patches:
   python extract_sna_features.py --data_path 'test_dataset/slides' \
   --cell_properties_path 'test_dataset/cell_property' \
   --list_dict_path 'test_dataset/patches' \
-  --save_path 'test_dataset/Handcrafted_features/sna_statistics'  \
+  --save_path 'test_dataset/features/sna_statistics'  \
   --workers 10
   ```
 
@@ -131,7 +131,7 @@ Extract various features from the patches:
   python extract_athena_spatial_features.py --data_path 'test_dataset/slides' \
   --cell_properties_path 'test_dataset/cell_property' \
   --list_dict_path 'test_dataset/patches' \
-  --save_path 'test_dataset/Handcrafted_features/athena_statistics'  \
+  --save_path 'test_dataset/features/athena_statistics'  \
   --workers 10
   ```
 
@@ -141,7 +141,7 @@ Extract various features from the patches:
   python extract_tissue_features.py --data_path 'test_dataset/slides' \
   --hovernet_json_path 'test_dataset/Hovernet_output/json' \
   --list_dict_path 'test_dataset/patches' \
-  --save_path 'test_dataset/Handcrafted_features/tissue_statistics' \
+  --save_path 'test_dataset/features/tissue_statistics' \
   --workers 10 \
   --background_threshold 220
   ```
@@ -152,7 +152,7 @@ Extract various features from the patches:
 Combine all extracted features into a final dataset:
 
 ```bash
-python club_features.py --feat_path 'test_dataset/Handcrafted_features' \
+python club_features.py --feat_path 'test_dataset/features' \
 --column_name_path 'test_dataset' \
 --list_dict_path 'test_dataset/patches' \
 --remove_cell_type 'none'
@@ -165,8 +165,8 @@ Note: Adjust the `--remove_cell_type` option if necessary, based on the classes 
 Filter the patches based on heuristics and binning normalization based on training patches list:
 
 ```bash
-python data_filtering.py --feat_path 'test_dataset/Handcrafted_features' \
---save_path 'test_dataset/Handcrafted_features' \
+python data_filtering.py --feat_path 'test_dataset/features' \
+--save_path 'test_dataset/features' \
 --train_test_dict_path 'test_dataset/train_test_dict.json' \
 --list_dict_path 'test_dataset/patches' \
 --bins 10 --norm_feat 'bin' \
