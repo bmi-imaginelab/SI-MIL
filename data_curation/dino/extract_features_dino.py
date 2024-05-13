@@ -81,7 +81,7 @@ def extract_feature_pipeline(args):
 
 	# save features
 	if args.dump_features and dist.get_rank() == 0:
-		torch.save(train_features.cpu(), os.path.join(args.dump_features, "trainfeat.pth"))
+		torch.save(train_features.cpu(), os.path.join(args.dump_features, "trainfeat_deep.pth"))
 	
 	del train_features
 	
@@ -90,7 +90,7 @@ def extract_feature_pipeline(args):
 
 	# save features
 	if args.dump_features and dist.get_rank() == 0:
-		torch.save(test_features.cpu(), os.path.join(args.dump_features, "testfeat.pth"))
+		torch.save(test_features.cpu(), os.path.join(args.dump_features, "testfeat_deep.pth"))
 		
 
 @torch.no_grad()
@@ -193,7 +193,7 @@ if __name__ == '__main__':
 
 	parser.add_argument('--data_path', default='', type=str)
 
-	parser.add_argument("--use_avgpool", default=True, type=bool, help="Magnification.")
+	parser.add_argument("--use_avgpool", default=True, type=bool, help="avgpool.")
 
 	parser.add_argument('--data_dir', default='', type=str, help='Dataset folder name')
 
