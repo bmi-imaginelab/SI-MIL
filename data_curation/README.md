@@ -180,8 +180,11 @@ python data_filtering.py --feat_path 'test_dataset/features' \
 Following going through the PathExpert feature extraction process, to extract deep features from the patches using Deep Neural Network (specifically ViT-S, but can be modified), run the following:
 
 ```bash
-python extract_deep_features.py --patch_path 'test_dataset/patches' \
---save_path 'test_dataset/Deep_features' 
+parent_dir='/path/to/test_dataset'
+
+python dino/extract_features_dino.py --pretrained_weights "/path/to/model/weights" \
+--arch 'vit_small' --dump_features "$parent_dir/features" \
+--data_dir "$parent_dir/patches" --data_path "$parent_dir/features"
 ```
 
 We provide the following VIT-S models (self-supervised with DINO method) on the WSIs from training set of per corresponding dataset used in this study:
