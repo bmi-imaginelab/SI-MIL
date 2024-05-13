@@ -191,9 +191,9 @@ def run_extraction(file_name):
 				start_coordinate_list.append([x_min, y_min])
 				end_coordinate_list.append([x_max, y_max])
 
-			cell_contour_list = np.array(cell_contour_list)//mag_ratio
-			start_coordinate_list = np.array(start_coordinate_list)//mag_ratio
-			end_coordinate_list = np.array(end_coordinate_list)//mag_ratio
+			cell_contour_list = np.array(cell_contour_list, dtype=object)//mag_ratio
+			start_coordinate_list = np.array(start_coordinate_list, dtype=object)//mag_ratio
+			end_coordinate_list = np.array(end_coordinate_list, dtype=object)//mag_ratio
 
 			final_feature_dict = {}
 
