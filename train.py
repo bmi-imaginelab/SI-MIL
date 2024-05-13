@@ -13,13 +13,13 @@ from sklearn.metrics import roc_curve, roc_auc_score, precision_recall_fscore_su
 from sklearn.datasets import load_svmlight_file
 from collections import OrderedDict
 import torch.nn as nn
-import wandb
 from tqdm import tqdm
 import pickle
 import json
 torch.manual_seed(0)
 import torch.nn.functional as F
 from sklearn.model_selection import KFold
+import wandb
 
 def train(train_list, dataset_split_dict, dataset_split_deep_dict, features_array, features_deep_array, milnet, criterion, optimizer, feats_size, feats_size_deep, args, epoch):
 	milnet.train()
@@ -238,7 +238,7 @@ def main():
 	parser.add_argument('--num_classes', default=2, type=int, help='Number of output classes [2]')
 	parser.add_argument('--lr', default=0.0002, type=float, help='Initial learning rate [0.0002]')
 	parser.add_argument('--num_epochs', default=40, type=int, help='Number of total training epochs [40|200]')
-	parser.add_argument('--gpu_index', type=int, nargs='+', default=(1,), help='GPU ID(s) [0]')
+	parser.add_argument('--gpu_index', type=int, default=1, help='GPU ID(s) [0]')
 	parser.add_argument('--weight_decay', default=5e-2, type=float, help='Weight decay [5e-3]')
 	
 	# path for PathExpert features
@@ -252,7 +252,6 @@ def main():
 	parser.add_argument('--features_deep_path', default='', type=str, help='Dataset folder name')
 	parser.add_argument('--features_deep_path_test', default='', type=str, help='Dataset folder name')
 
-	
 	parser.add_argument('--save_path', default='', type=str, help='Dataset folder name')
 	
 	parser.add_argument('--bins', default=10, type=int, help='Number of bins for binarization')
@@ -277,12 +276,15 @@ def main():
 		torch.manual_seed(args.torch_seed)
 			
 	save_path = args.save_path
-	
+	if not os.path.isdir(save_path):
+		try:
+			os.mkdir(save_path)
+		except:
+			print('just made by different multiprocessing file')
+			
 	feat_type = args.save_path.split('/')[-3]  + '_' + args.feat_type
-	
-	gpu_ids = tuple(args.gpu_index)
-	os.environ['CUDA_VISIBLE_DEVICES']=','.join(str(x) for x in gpu_ids)
-	
+		
+	device = torch.device(f'cuda:{args.gpu_index}')
 	
 	with open(args.dataset_split_path, 'rb') as f:
 		dataset_split_dict = pickle.load(f)
@@ -315,9 +317,9 @@ def main():
 
 	import si_mil as mil	
 	
-	b_classifier = mil.BClassifier(input_size=feats_size, input_size_deep=feats_size_deep, output_class=args.num_classes, stop_gradient=args.stop_gradient, no_projection=args.no_projection, top_k=args.top_k, temperature=args.temperature, percentile=args.percentile, dropout_v=args.dropout_node).cuda()
+	b_classifier = mil.BClassifier(input_size=feats_size, input_size_deep=feats_size_deep, output_class=args.num_classes, stop_gradient=args.stop_gradient, no_projection=args.no_projection, top_k=args.top_k, temperature=args.temperature, percentile=args.percentile, dropout_v=args.dropout_node).to(device)
 	
-	milnet = mil.MILNet(b_classifier).cuda()
+	milnet = mil.MILNet(b_classifier).to(device)
 
 	criterion = nn.BCELoss()
 	
