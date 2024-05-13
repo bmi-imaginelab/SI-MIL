@@ -36,11 +36,14 @@ Following curating the data as explained above, we are now ready to feed the ext
 Example training command:
 
 ```
-python train.py   --organ 'test_organ' --dataset_split_path 'train_dict.pickle' \
---dataset_split_path_test 'test_dict.pickle'   --dataset_split_deep_path 'train_dict_dino.pickle' \
---dataset_split_deep_path_test 'test_dict_dino.pickle' --features_deep_path 'trainfeat_dino.pth'  \
---features_deep_path_test 'testfeat_dino.pth' --features_path 'binned_hcf.csv' \
---save_path 'MIL_experiment/' --dropout_patch 0.4 --num_epochs 40 --weight_decay 0.01 \
+features_dir='path/to/test_dataset/features'
+
+python train.py   --organ 'test_organ' --dataset_split_path "$features_dir/train_dict.pickle" \
+--dataset_split_path_test "$features_dir/test_dict.pickle"  --dataset_split_deep_path "$features_dir/train_dict_deep.pickle" \
+--dataset_split_deep_path_test "$features_dir/test_dict_deep.pickle" \
+--features_deep_path "$features_dir/trainfeat_deep.pth"  --features_deep_path_test "$features_dir/testfeat_deep.pth" \
+--features_path "$features_dir/binned_hcf.csv" --save_path "$features_dir/MIL_experiment" \
+--dropout_patch 0.4 --num_epochs 40 --weight_decay 0.01 \
 --lr 0.0002 --top_k 20 --gpu_index 0  --use_additive 'yes'  --dropout_node 0.0  \
 --no_projection 'yes'   --feat_type 'patchattn_with_featattn_mlpmixer_Lmse'  --stop_gradient 'no' \
 --cross_val_fold 0 --temperature 3.0  --percentile 0.75 --torch_seed -1
