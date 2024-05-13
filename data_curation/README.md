@@ -180,6 +180,7 @@ python data_filtering.py --feat_path 'test_dataset/features' \
 Following going through the PathExpert feature extraction process, to extract deep features from the patches using Deep Neural Network (specifically ViT-S, but can be modified), run the following:
 
 ```bash
+conda activate simil
 parent_dir='/path/to/test_dataset'
 
 python dino/extract_features_dino.py --pretrained_weights "/path/to/model/weights" \
