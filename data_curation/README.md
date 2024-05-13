@@ -7,7 +7,7 @@ This repository includes scripts designed to extract both Path Expert and Deep f
 ### Setting Up Your Dataset
 
 1. Download a folder named `test_dataset` from this repo, containing the feature name pickle files. You can rename this folder if necessary.
-2. Inside `test_dataset`, create another folder named `slides` and add all your WSIs there. Following, make a JSON file to store the train and test split with WSIs names and their binary label (0,1) similar as https://github.com/bmi-imaginelab/SI-MIL/blob/main/test_dataset/train_test_dict.json.
+2. Inside `test_dataset`, create another folder named `slides` and add all your WSIs there. Following, make a JSON file to store the train and test split with WSIs names and their binary label (0,1) similar as https://github.com/bmi-imaginelab/SI-MIL/blob/main/test_dataset/train_test_dict.json:
 
 
 ```bash
