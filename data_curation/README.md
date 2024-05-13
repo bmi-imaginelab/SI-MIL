@@ -9,6 +9,12 @@ This repository includes scripts designed to extract both Path Expert and Deep f
 1. Download a folder named `test_dataset` from this repo, containing the feature name pickle files. You can rename this folder if necessary.
 2. Inside `test_dataset`, create another folder named `slides` and add all your WSIs there. Following, make a JSON file to store the train and test split with WSIs names and their binary label (0,1) similar as https://github.com/bmi-imaginelab/SI-MIL/blob/main/test_dataset/train_test_dict.json.
 
+
+```bash
+{"train_dict": {"TCGA-A1-A0SF-01Z-00-DX1.7F252D89-EA78-419F-A969-1B7313D77499.svs": 0, "TCGA-4H-AAAK-01Z-00-DX1.ABF1B042-1970-4E28-8671-43AAD393D2F9.svs": 1, "TCGA-5L-AAT1-01Z-00-DX1.F3449A5B-2AC4-4ED7-BF44-4C8946CDB47D.svs": 1, "TCGA-A2-A04Q-01Z-00-DX1.DF7ED6B6-7701-486D-9007-F26B6F0682C4.svs": 0, ....}, "test_dict": {"TCGA-AR-A1AV-01Z-00-DX1.93698893-7C5C-44C1-A488-ED358D523693.svs": 0, "TCGA-AR-A1AK-01Z-00-DX1.0AFFA0B5-D1A6-43E9-892A-7CB16A79E5F9.svs": 1, ...}}
+```
+
+
 ### Extracting WSI-Level Cell Segmentation
 
 Run the following command to clone [HoVer-Net](https://github.com/vqdang/hover_net.git) repository, and then install their python environment. 
