@@ -10,8 +10,11 @@ Official code for our CVPR 2024 publication [SI-MIL: Taming Deep MIL for Self-In
 To install python dependencies, 
 
 ```
-conda env create -f environment.yaml
+conda create -n simil python==3.9
 conda activate simil
+conda install -c conda-forge openslide
+pip install openslide-python opencv-python pandas scikit-image scipy shapely scikit-learn networkx astropy community multiprocess torch torchvision torchaudio albumentations wandb tqdm matplotlib pillow
+
 ```
 
 ## Organizing Data
