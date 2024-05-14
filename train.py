@@ -282,7 +282,7 @@ def main():
 		except:
 			print('just made by different multiprocessing file')
 			
-	feat_type = args.save_path.split('/')[-3]  + '_' + args.feat_type
+	feat_type = args.save_path.split('/')[-2]  + '_' + args.feat_type
 		
 	device = torch.device(f'cuda:{args.gpu_index}')
 	
