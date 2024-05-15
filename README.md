@@ -13,7 +13,7 @@ To install python dependencies,
 conda create -n simil python==3.9
 conda activate simil
 conda install -c conda-forge openslide
-pip install openslide-python opencv-python pandas scikit-image scipy shapely scikit-learn networkx astropy community multiprocess torch torchvision torchaudio albumentations wandb tqdm matplotlib pillow
+pip install openslide-python opencv-python pandas scikit-image scipy shapely scikit-learn networkx astropy community multiprocess torch torchvision torchaudio albumentations wandb tqdm matplotlib pillow gdown docopt imgaug termcolor 
 
 ```
 
