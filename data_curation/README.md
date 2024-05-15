@@ -27,12 +27,9 @@ This repository includes scripts designed to extract both Path Expert and Deep f
 Run the following command to clone [HoVer-Net](https://github.com/vqdang/hover_net.git) repository, and then install their python environment. 
 
 ```bash
-
+conda activate simil
 git clone https://github.com/vqdang/hover_net.git
 cd hover_net
-conda env create -f environment.yml
-conda activate hovernet
-pip install torch==1.6.0 torchvision==0.7.0
 pip install gdown
 gdown --id 1SbSArI3KOOWHxRlxnjchO7_MbWzB4lNR  # downloading HoVer-Net PanNuke checkpoint
 ```
