@@ -30,7 +30,6 @@ Run the following command to clone [HoVer-Net](https://github.com/vqdang/hover_n
 conda activate simil
 git clone https://github.com/vqdang/hover_net.git
 cd hover_net
-pip install gdown
 gdown --id 1SbSArI3KOOWHxRlxnjchO7_MbWzB4lNR  # downloading HoVer-Net PanNuke checkpoint
 ```
 
