@@ -59,7 +59,7 @@ wsi \
 
 To be consistent with our study, please use model_path=hovernet_fast_pannuke_type_tf2pytorch.tar from [PanNuke checkpoint](https://drive.google.com/file/d/1SbSArI3KOOWHxRlxnjchO7_MbWzB4lNR/view). Note that HoVer-Net framework can be replaced with other cell segmentation and classification models as required, however since the following feature extraction scripts are based on HoVer-Net based output, that's why those scripts would need to be modifed as well. 
 
-Note that if you want to run multiple HoVer-Net jobs, split the data into multiple folders, run jobs for each input_dir while keeping output_dir same, and make sure to change the name of cache_path. 
+Note that if you want to run multiple HoVer-Net jobs, split the data into multiple folders, run a job for each input_dir while keeping output_dir same, and make sure to change the name of cache_path for each job. 
 
 ### Path Expert Feature Extraction Pipeline
 
