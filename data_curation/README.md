@@ -59,6 +59,8 @@ wsi \
 
 To be consistent with our study, please use model_path=hovernet_fast_pannuke_type_tf2pytorch.tar from [PanNuke checkpoint](https://drive.google.com/file/d/1SbSArI3KOOWHxRlxnjchO7_MbWzB4lNR/view). Note that HoVer-Net framework can be replaced with other cell segmentation and classification models as required, however since the following feature extraction scripts are based on HoVer-Net based output, that's why those scripts would need to be modifed as well. 
 
+Note that if you want to run multiple HoVer-Net jobs, split the data into multiple folders, run jobs for each input_dir while keeping output_dir same, and make sure to change the name of cache_path. 
+
 ### Path Expert Feature Extraction Pipeline
 
 Modify the parent_dir path in PathExpert_feature_extraction.sh file to absolute path of `test_dataset`. Assuming the slides and HoVer-Net outputs already exists, run the following bash script to end-to-end extract PathExpert features:
@@ -121,7 +123,7 @@ Extract various features from the patches:
   --cell_properties_path "$parent_dir/cell_property" \
   --list_dict_path "$parent_dir/patches" \
   --save_path "$parent_dir/features/sna_statistics"  \
-  --workers 10
+  --workers 20
   ```
 
 - **Athena Based Heterogeneity:**
@@ -131,7 +133,7 @@ Extract various features from the patches:
   --cell_properties_path "$parent_dir/cell_property" \
   --list_dict_path "$parent_dir/patches" \
   --save_path "$parent_dir/features/athena_statistics"  \
-  --workers 10
+  --workers 15
   ```
 
 - **Tissue features:**
