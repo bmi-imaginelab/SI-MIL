@@ -32,10 +32,8 @@ args = parser.parse_args()
 
 hovernet_mag = 40
 patch_extract_mag = 5
-patch_mag_ratio = hovernet_mag/patch_extract_mag
 patch_size = 224
-height = int(patch_size * patch_mag_ratio)
-width = int(patch_size * patch_mag_ratio)
+
 use_index = True  # since our patches are saved as row col
 
 background_threshold = args.background_threshold
@@ -68,7 +66,7 @@ for file in os.listdir(json_path):
 		final_list.append(file.split('/')[-1][:-4])
 
 
-def single_crop_features(slide, cell_contour_list, start_coordinate_list, end_coordinate_list, patch_name):
+def single_crop_features(slide, cell_contour_list, start_coordinate_list, end_coordinate_list, patch_name, patch_mag_ratio, height, width):
 	
 	_, column, row = patch_name.split('/')[-1].split('.')[0].split('_')
 
@@ -157,52 +155,57 @@ def run_extraction(file_name):
 
 	try:
 		slide_mag = int(slide.properties['aperio.AppMag'][:2])
+		patch_mag_ratio = slide_mag/patch_extract_mag
+		height = int(patch_size * patch_mag_ratio)
+		width = int(patch_size * patch_mag_ratio)
+		mag_ratio = hovernet_mag/slide_mag  # will be 1  if slide mag = 40X
+		
 	except:
 		return None
 
-	if slide_mag != 40:
-		print('Not extracting:', svs_file_path, ' - ', slide_mag)
-		return None
+	# if slide_mag != 40:
+	# 	print('Not extracting:', svs_file_path, ' - ', slide_mag)
+	# 	return None
 
-	else:
-		mag_ratio = hovernet_mag/slide_mag  # will be 1 
+	# else:
+	
 
-		if not os.path.isfile(save_file_path):
+	if not os.path.isfile(save_file_path):
 
-			image_patches_list = np.array(all_list)[all_dict[file_name[:-1]][0]:all_dict[file_name[:-1]][1]]
-			
-			with open(json_file_path) as f:
-				pred_data = json.load(f)				
+		image_patches_list = np.array(all_list)[all_dict[file_name[:-1]][0]:all_dict[file_name[:-1]][1]]
+		
+		with open(json_file_path) as f:
+			pred_data = json.load(f)				
 
-			start_coordinate_list = []
-			end_coordinate_list = []
-			cell_contour_list = []
+		start_coordinate_list = []
+		end_coordinate_list = []
+		cell_contour_list = []
 
-			for i in pred_data['nuc'].keys():
-				temp_contour = np.array(pred_data['nuc'][i]['contour'])
-				cell_contour_list.append(temp_contour)
+		for i in pred_data['nuc'].keys():
+			temp_contour = np.array(pred_data['nuc'][i]['contour'])
+			cell_contour_list.append(temp_contour)
 
-				x_min = np.array(temp_contour)[:,0].min()
-				x_max = np.array(temp_contour)[:,0].max()
+			x_min = np.array(temp_contour)[:,0].min()
+			x_max = np.array(temp_contour)[:,0].max()
 
-				y_min = np.array(temp_contour)[:,1].min()
-				y_max = np.array(temp_contour)[:,1].max()
+			y_min = np.array(temp_contour)[:,1].min()
+			y_max = np.array(temp_contour)[:,1].max()
 
-				start_coordinate_list.append([x_min, y_min])
-				end_coordinate_list.append([x_max, y_max])
+			start_coordinate_list.append([x_min, y_min])
+			end_coordinate_list.append([x_max, y_max])
 
-			cell_contour_list = np.array(cell_contour_list, dtype=object)//mag_ratio
-			start_coordinate_list = np.array(start_coordinate_list, dtype=object)//mag_ratio
-			end_coordinate_list = np.array(end_coordinate_list, dtype=object)//mag_ratio
+		cell_contour_list = np.array(cell_contour_list, dtype=object)//mag_ratio
+		start_coordinate_list = np.array(start_coordinate_list, dtype=object)//mag_ratio
+		end_coordinate_list = np.array(end_coordinate_list, dtype=object)//mag_ratio
 
-			final_feature_dict = {}
+		final_feature_dict = {}
 
-			for patch_name in tqdm(image_patches_list):
-				final_feature_dict[patch_name] = single_crop_features(slide, cell_contour_list, start_coordinate_list, end_coordinate_list, patch_name)
+		for patch_name in tqdm(image_patches_list):
+			final_feature_dict[patch_name] = single_crop_features(slide, cell_contour_list, start_coordinate_list, end_coordinate_list, patch_name, patch_mag_ratio, height, width)
 
 
-			with open(save_file_path, 'wb') as f:
-				pickle.dump(final_feature_dict, f)
+		with open(save_file_path, 'wb') as f:
+			pickle.dump(final_feature_dict, f)
 
 	return None
 
