@@ -33,10 +33,8 @@ args = parser.parse_args()
 NUM_WORKERS = args.workers
 hovernet_mag = 40 # default for all experiments in SI-MIL
 patch_extract_mag = 5 # defaulf for SI-MIL. Can be changes as required
-patch_mag_ratio = hovernet_mag/patch_extract_mag
+
 patch_size = 224  # defaulf for SI-MIL. Can be changes as required
-height = int(patch_size * patch_mag_ratio)
-width = int(patch_size * patch_mag_ratio)
 no_of_cell_types = 5 # hovernet pannuke
 outlier_removal = 0.05  # removing outliers which could be caused by incorrect segmentations from hovernet.
 use_index = True  # since our patches are saved as row col
@@ -64,7 +62,7 @@ with open(os.path.join(list_dict_path, 'all_list.pickle'), 'rb') as f:
 
 
 
-def single_crop_features(key_list, cell_centroid_list, type_list, property_list, patch_name):
+def single_crop_features(key_list, cell_centroid_list, type_list, property_list, patch_name, patch_mag_ratio, height, width):
 	
 	_, column, row = patch_name.split('/')[-1].split('.')[0].split('_')
 
@@ -135,46 +133,50 @@ def run_extraction(cell_pickle_path):
 	
 	try:
 		slide_mag = int(slide.properties['aperio.AppMag'][:2])
+		patch_mag_ratio = slide_mag/patch_extract_mag
+		height = int(patch_size * patch_mag_ratio)
+		width = int(patch_size * patch_mag_ratio)
+	
 	except:
 		return None
 		
-	if slide_mag != 40:
-		print('Not extracting:', cell_pickle_path, ' - ', slide_mag)
-		return None
+	# if slide_mag != 40:
+	# 	print('Not extracting:', cell_pickle_path, ' - ', slide_mag)
+	# 	return None
 
-	else:
-		if not os.path.isfile(save_path + '/' + cell_pickle_path):
-			
-			print(cell_pickle_path)
+	# else:
+	if not os.path.isfile(save_path + '/' + cell_pickle_path):
+		
+		print(cell_pickle_path)
 
-			image_patches_list = np.array(all_list)[all_dict[cell_pickle_path[:-7]][0]:all_dict[cell_pickle_path[:-7]][1]]
+		image_patches_list = np.array(all_list)[all_dict[cell_pickle_path[:-7]][0]:all_dict[cell_pickle_path[:-7]][1]]
 
-			with open(cell_properties_path + '/' + cell_pickle_path, 'rb') as f:
-				cell_prop = pickle.load(f)
+		with open(cell_properties_path + '/' + cell_pickle_path, 'rb') as f:
+			cell_prop = pickle.load(f)
 
-			cell_centroid_list = []
-			type_list = []
-			property_list = []
-			for i in cell_prop.keys():
-				type_list.append(np.array(cell_prop[i]['type']))
-				cell_centroid_list.append(np.array(cell_prop[i]['centroid']))
-				property_list.append(np.array(cell_prop[i]['properties']))
-
-
-			key_list = np.array(list(cell_prop.keys()))
-			cell_centroid_list = np.round(np.array(cell_centroid_list))
-			type_list = np.array(type_list)
-			property_list = np.array(property_list)
+		cell_centroid_list = []
+		type_list = []
+		property_list = []
+		for i in cell_prop.keys():
+			type_list.append(np.array(cell_prop[i]['type']))
+			cell_centroid_list.append(np.array(cell_prop[i]['centroid']))
+			property_list.append(np.array(cell_prop[i]['properties']))
 
 
-			final_feature_dict = {}
+		key_list = np.array(list(cell_prop.keys()))
+		cell_centroid_list = np.round(np.array(cell_centroid_list))
+		type_list = np.array(type_list)
+		property_list = np.array(property_list)
 
-			for patch_name in tqdm(image_patches_list):
-				final_feature_dict[patch_name] = single_crop_features(key_list, cell_centroid_list, type_list, property_list, patch_name)
+
+		final_feature_dict = {}
+
+		for patch_name in tqdm(image_patches_list):
+			final_feature_dict[patch_name] = single_crop_features(key_list, cell_centroid_list, type_list, property_list, patch_name, patch_mag_ratio, height, width)
 
 
-			with open(save_path + '/' + cell_pickle_path, 'wb') as f:
-				pickle.dump(final_feature_dict, f)
+		with open(save_path + '/' + cell_pickle_path, 'wb') as f:
+			pickle.dump(final_feature_dict, f)
 
 	return None
 
