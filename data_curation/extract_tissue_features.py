@@ -158,7 +158,7 @@ def run_extraction(file_name):
 		patch_mag_ratio = slide_mag/patch_extract_mag
 		height = int(patch_size * patch_mag_ratio)
 		width = int(patch_size * patch_mag_ratio)
-		mag_ratio = hovernet_mag/slide_mag  # will be 1  if slide mag = 40X
+		mag_ratio = hovernet_mag/slide_mag  # will be 1 if slide mag = 40X
 		
 	except:
 		return None
