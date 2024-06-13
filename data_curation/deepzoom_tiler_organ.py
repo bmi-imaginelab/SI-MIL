@@ -314,29 +314,29 @@ if __name__ == '__main__':
 			except:
 				continue
 			print(base_level_mag)
-# 			if base_level_mag != 40:
-# 				 # can be done above. Shown here for reference
-
-# 				# then level 0 means that particular WSI's base level magnification
-
-# 				# but here if we give 1, 3 means we want 20X and 5X according to this paper. That is it should give 
-# 				# output base on 40X only. 
-
-# 				# therefore there is need of some substraction factor in line abc and abc, so that if level=1, 3 is 
-# 				# given and base mag is 20X, it should be converted to level=0, 2 to be able to extract 20X and 5X 
-# 				# patches. 
-
-# 				# To be noted that this approach is not very robust, as there is no means of giving level=0 and 20X 
-# 				# base mag. According to this method it will convert it to level = -1, which doesnt make sense
-
-# 				levels = np.array(levels)
-
-# 				div_temp = base_level_mag/2
-# 				substraction_factor = int(math.log(40/div_temp, base_level_mag/div_temp) - 1)
-# 				levels -= substraction_factor
-
 			if base_level_mag != 40:
-				continue  # we will just work on 40x images for now
+				 # can be done above. Shown here for reference
+
+				# then level 0 means that particular WSI's base level magnification
+
+				# but here if we give 1, 3 means we want 20X and 5X according to this paper. That is it should give 
+				# output base on 40X only. 
+
+				# therefore there is need of some substraction factor in line abc and abc, so that if level=1, 3 is 
+				# given and base mag is 20X, it should be converted to level=0, 2 to be able to extract 20X and 5X 
+				# patches. 
+
+				# To be noted that this approach is not very robust, as there is no means of giving level=0 and 20X 
+				# base mag. According to this method it will convert it to level = -1, which doesnt make sense
+
+				levels = np.array(levels)
+
+				div_temp = base_level_mag/2
+				substraction_factor = int(math.log(40/div_temp, base_level_mag/div_temp) - 1)
+				levels -= substraction_factor
+
+			# if base_level_mag != 40:
+			# 	continue  # we will just work on 40x images for now
 			
 			print(levels, base_level_mag)
 
