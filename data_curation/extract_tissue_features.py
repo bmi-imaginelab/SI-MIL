@@ -129,8 +129,8 @@ def single_crop_features(slide, cell_contour_list, start_coordinate_list, end_co
 	cell_percent = (wsi_crop_patch_segmentation).sum()/wsi_crop_patch_segmentation.size
 	background_percent = (1-background_mask).sum()/background_mask.size
 	
-	if cell_percent+background_percent == 1:
-		return [None]*num_feat
+	# if cell_percent+background_percent == 1:
+	# 	return [None]*num_feat
 	
 	tissue_statistics.append(cell_percent) # percent of cell region 
 	tissue_statistics.append(1-cell_percent-background_percent) # percent of tissue 
