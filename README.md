@@ -3,7 +3,7 @@
 # SI-MIL: Taming Deep MIL for Self-Interpretability in Gigapixel Histopathology
 
 
-Official code for our CVPR 2024 publication [SI-MIL: Taming Deep MIL for Self-Interpretability in Gigapixel Histopathology](https://arxiv.org/pdf/2312.15010). 
+Official code for our CVPR 2024 publication [SI-MIL: Taming Deep MIL for Self-Interpretability in Gigapixel Histopathology](https://openaccess.thecvf.com/content/CVPR2024/html/Kapse_SI-MIL_Taming_Deep_MIL_for_Self-Interpretability_in_Gigapixel_Histopathology_CVPR_2024_paper.html). 
 
 ![teaser figure](./teaser.png)
 ## Requirements
