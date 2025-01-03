@@ -66,13 +66,11 @@ def train(train_list, dataset_split_dict, dataset_split_deep_dict, features_arra
 
 		loss = loss_class
 		
-		if 'Lmse' in args.feat_type:
-			loss_mse = F.mse_loss(bag_prediction, bag_prediction_deep.clone().detach())
-			total_loss_mse = total_loss_mse + 20*loss_mse.item()
-			
-			loss += 20*loss_mse
+		# for knowledge distillation loss between two branches
+		loss_mse = F.mse_loss(bag_prediction, bag_prediction_deep.clone().detach())
+		total_loss_mse = total_loss_mse + 20*loss_mse.item()
 		
-
+		loss += 20*loss_mse
 		
 		loss_attnreg = torch.norm(A_patch, p=2)
 		total_loss_attnreg = total_loss_attnreg + 0.05*loss_attnreg.item()
@@ -419,15 +417,10 @@ def main():
 		print(bag_score_classwise)
 		
 		
-		if 'Lmse' in args.feat_type: 
-			wandb.log({"train loss": train_loss_bag, "train loss attnreg": train_loss_bag_attnreg, "train loss mse": train_loss_bag_mse, "val loss": val_loss_bag, 
-				   "test loss": test_loss_bag, "val score": avg_score_val,
-				   "test score": avg_score}, step=epoch)
-		else:
-			wandb.log({"train loss": train_loss_bag, "train loss attnreg": train_loss_bag_attnreg, "val loss": val_loss_bag, 
-				   "test loss": test_loss_bag, "val score": avg_score_val,
-				   "test score": avg_score}, step=epoch)
-		
+		wandb.log({"train loss": train_loss_bag, "train loss attnreg": train_loss_bag_attnreg, "train loss mse": train_loss_bag_mse, "val loss": val_loss_bag, 
+			   "test loss": test_loss_bag, "val score": avg_score_val,
+			   "test score": avg_score}, step=epoch)
+
 		for class_index in range(args.num_classes):
 			wandb.log({ "Validation AUC Class " + str(class_index):aucs_val, "Test AUC Class " + str(class_index):aucs, "Validation score Class " + str(class_index):bag_score_classwise_val[class_index], "Test score Class " + str(class_index):bag_score_classwise[class_index] }, step=epoch)
 			
